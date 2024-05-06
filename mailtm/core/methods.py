@@ -6,6 +6,8 @@ Each class represents a set of related methods.
 from dataclasses import dataclass
 import typing as t
 
+from ..server import MailServer
+
 
 @dataclass
 class DomainMethods:
@@ -105,3 +107,8 @@ class ServerAuth:
     account_password: t.Optional[str] = None
     """
     The password of the account."""
+
+
+@dataclass
+class AttachServer:
+    server: MailServer
