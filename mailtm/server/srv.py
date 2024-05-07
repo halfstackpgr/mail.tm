@@ -25,20 +25,21 @@ class MailServer:
         )
 
     def subscribe(
-        self, event: t.Type[T]
-    ) -> t.Callable[
-        [t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]]],
-        t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]],
-    ]:
-        def decorator(
-            func: t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]],
-        ) -> t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]]:
-            if event not in self.handlers:
-                self.handlers[event] = []
-            self.handlers[event].append(func)
-            return func
+            self: t.Any, event: t.Type[T]
+        ) -> t.Callable[
+            [t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]]],
+            t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]],
+        ]:
+            def decorator(
+                func: t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]],
+            ) -> t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]]:
+                if event not in self.handlers:
+                    self.handlers[event] = []
+                self.handlers[event].append(func)
+                return func
 
-        return decorator
+            return decorator
+
 
     async def dispatch(self, event: ServerEvents) -> None:
         if event.__class__ in self.handlers:

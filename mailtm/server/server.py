@@ -1,3 +1,5 @@
+import typing as t
+
 from .srv import MailServer
 from ..abc.modals import Message, Domain
 
