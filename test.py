@@ -1,6 +1,9 @@
-from mailtm.server.events import NewMessage
-from mailtm.core.methods import ServerAuth
-from mailtm.server.srv import MailServer
+try:
+    from mailtm.server.events import NewMessage
+    from mailtm.core.methods import ServerAuth
+    from mailtm.server.srv import MailServer
+except Exception:
+    print("Cant")
 
 print("Creating MailServer instance...")
 cs = MailServer(
