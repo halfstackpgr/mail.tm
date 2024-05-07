@@ -3,8 +3,8 @@ import typing as t
 from .srv import MailServer
 from ..abc.modals import Message, Domain
 
-class Server(MailServer):
 
+class Server(MailServer):
     async def _check_for_new_messages(self) -> t.Optional[Message]:
         msg_view = await self.mail_client.get_messages()
         if msg_view and msg_view.messages:
