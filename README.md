@@ -1,4 +1,5 @@
-![@mail tm](https://github.com/halfstackpgr/Mail.tm/assets/118044992/9cb767e6-6491-462f-9f31-9154f3feed35)
+![SDK Banner](https://github.com/halfstackpgr/Mail.tm/assets/118044992/67e3a10a-f7d4-44bc-ae11-cd70ad6ee0d3)
+
 
 <div>
   <h1 align="center">Mail.tm</h1>
