@@ -1,5 +1,4 @@
 from .srv import MailServer
 
 
-class Server(MailServer):
-    ...
+class Server(MailServer): ...

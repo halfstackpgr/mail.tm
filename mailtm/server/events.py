@@ -9,6 +9,7 @@ class BaseEvent:
     """
     Base event for all the concurrent events.
     """
+
     def __init__(self, event: str, client: AsyncMail, _server: AttachServer) -> None:
         self.__server = _server
         self.event = event
@@ -105,12 +106,14 @@ class ServerEnded:
 
 
 ServerEvents = t.Union[
-    ServerStarted, 
+    ServerStarted,
     ServerEnded,
     DomainChange,
-    NewAccountCreated, 
-    AccountSwitched, 
+    NewAccountCreated,
+    AccountSwitched,
     AccountDeleted,
-    RecieveMessage, 
-    MessageDelete
-    ]
+    RecieveMessage,
+    MessageDelete,
+]
+
+Events = t.TypeVar("Events", bound=ServerEvents)

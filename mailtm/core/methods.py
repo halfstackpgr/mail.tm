@@ -3,10 +3,14 @@ This module contains classes representing different methods available in the Mai
 Each class represents a set of related methods.
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass
 import typing as t
 
-from ..server.srv import MailServer
+
+if t.TYPE_CHECKING:
+    from mailtm.server.srv import MailServer
 
 
 @dataclass
