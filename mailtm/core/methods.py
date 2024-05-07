@@ -6,7 +6,7 @@ Each class represents a set of related methods.
 from dataclasses import dataclass
 import typing as t
 
-from ..server import MailServer
+from ..server.srv import MailServer
 
 
 @dataclass

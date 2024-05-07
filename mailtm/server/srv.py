@@ -1,26 +1,15 @@
-import asyncio
 import typing as t
 
-
-from .abc.generic import Token
-from .abc.modals import Message, Domain
-from .impls.xclient import AsyncMail
-from .core.methods import ServerAuth
-from .core.events import RecieveMessage, DomainChange
-
-
-EventTypes = t.Union[RecieveMessage, DomainChange]
-
-DecoratorType = t.Callable[
-    [t.Callable[[EventTypes], None]], t.Callable[[EventTypes], None]
-]
+from ..core.methods import ServerAuth
+from .events import ServerEvents
+from ..abc.modals import Message, Domain
+from ..abc.generic import Token
+from ..impls.xclient import AsyncMail
 
 
 class MailServer:
     def __init__(self, server_auth: ServerAuth) -> None:
-        self.handlers: t.Dict[
-            t.Type[EventTypes], t.List[t.Callable[[EventTypes], None]]
-        ] = {}
+        self.handlers: t.Dict[t.Type[ServerEvents], t.List[t.Callable[[ServerEvents], None]]] = {}
         self._server_auth = server_auth
         self._last_msg: t.List[Message] = []
         self._last_domain: t.List[Domain] = []
@@ -30,19 +19,20 @@ class MailServer:
             )
         )
 
-    def subscribe(self, event: t.Type[EventTypes]):
-        def decorator(func):
+
+        
+    def subscribe(self, event: t.Type[EventTypes]) -> t.Callable[[t.Callable[[EventTypes], None]], t.Callable[[EventTypes], None]]:
+        def decorator(func: t.Callable[[EventTypes], None]) -> t.Callable[[EventTypes], None]:
             if event not in self.handlers:
                 self.handlers[event] = []
             self.handlers[event].append(func)
             return func
-
         return decorator
 
-    def dispatch(self, event: EventTypes):
+    def dispatch(self, event: EventTypes) -> None:
         if event.__class__ in self.handlers:
             for handler in self.handlers[event.__class__]:
                 handler(event)
 
-    def run() -> None:
+    async def run(self) -> None:
         pass

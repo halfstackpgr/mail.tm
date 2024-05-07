@@ -1,10 +1,14 @@
+import typing as t
 from ..impls.xclient import AsyncMail
-from .methods import AttachServer
+from ..core.methods import AttachServer
 from ..abc.modals import Message, Domain, Account
 from ..core.methods import ServerAuth
 
 
 class BaseEvent:
+    """
+    Base event for all the concurrent events.
+    """
     def __init__(self, event: str, client: AsyncMail, _server: AttachServer) -> None:
         self.__server = _server
         self.event = event
@@ -98,3 +102,15 @@ class ServerEnded:
     """
     Event triggered when the server is ended.
     """
+
+
+ServerEvents = t.Union[
+    ServerStarted, 
+    ServerEnded,
+    DomainChange,
+    NewAccountCreated, 
+    AccountSwitched, 
+    AccountDeleted,
+    RecieveMessage, 
+    MessageDelete
+    ]
