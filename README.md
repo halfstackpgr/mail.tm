@@ -48,6 +48,9 @@ Experience the power and convenience of Mail.tm with our Stack Development Kit â
 
 ## Stellar Feature:
 
+> [!NOTE]
+> This script sets up a [**pooling-based**](https://docs.python.org/3/library/multiprocessing.html) server that checks the API every second for new events. When a difference is detected, the corresponding event is dispatched, allowing you to respond dynamically to incoming messages.
+
 In addition to the core SDK functionalities, this package offers an additional layer of scripts designed to handle clients in an event-driven manner, reminiscent of frameworks like `discord.py` or `hikari`. With this SDK, you gain access to a client that dispatches events seamlessly.
 
 Here's a sample usage scenario:
@@ -58,7 +61,7 @@ from mailtm.core.methods import ServerAuth
 from mailtm.server.srv import MailServer
 
 # Initialize MailServer with authentication details
-cs = MailServer(
+server = MailServer(
     server_auth=ServerAuth(
         account_id="...",  # Your account ID.
         account_token="...",  # Your account token.
@@ -66,14 +69,14 @@ cs = MailServer(
 )
 
 # Define an event handler for new messages
-@cs.on_new_message 
+@server.on_new_message 
 async def event(event: NewMessage):
     print(event.new_message.text)
 
 # Start the event loop
-cs.run()
+server.run()
 ```
-> [!NOTE]
-> This script sets up a [**pooling-based**](https://docs.python.org/3/library/multiprocessing.html) server that checks the API every second for new events. When a difference is detected, the corresponding event is dispatched, allowing you to respond dynamically to incoming messages.
+This would initiate the event-runner which would start to pool, and a server is then initiated.
 
+### End
 
