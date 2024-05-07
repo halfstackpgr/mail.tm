@@ -1,4 +1,5 @@
 import typing as t
+import asyncio
 
 from ..core.methods import ServerAuth
 from .events import ServerEvents
@@ -20,19 +21,22 @@ class MailServer:
         )
 
 
-        
-    def subscribe(self, event: t.Type[EventTypes]) -> t.Callable[[t.Callable[[EventTypes], None]], t.Callable[[EventTypes], None]]:
-        def decorator(func: t.Callable[[EventTypes], None]) -> t.Callable[[EventTypes], None]:
+    
+    def subscribe(self, event: t.Type[ServerEvents]) -> t.Callable[[t.Callable[[ServerEvents], None]], t.Callable[[ServerEvents], None]]:
+        def decorator(func: t.Callable[[ServerEvents], None]) -> t.Callable[[ServerEvents], None]:
             if event not in self.handlers:
                 self.handlers[event] = []
             self.handlers[event].append(func)
             return func
         return decorator
 
-    def dispatch(self, event: EventTypes) -> None:
+    def dispatch(self, event: ServerEvents) -> None:
         if event.__class__ in self.handlers:
             for handler in self.handlers[event.__class__]:
                 handler(event)
 
-    async def run(self) -> None:
+    async def runner(self) -> None:
         pass
+    
+    def run(self) -> None:
+        asyncio.run(self.runner())
