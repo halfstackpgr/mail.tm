@@ -1,11 +1,12 @@
 import typing as t
+import abc
 from ..impls.xclient import AsyncMail
 from ..core.methods import AttachServer
 from ..abc.modals import Message, Domain, Account
 from ..core.methods import ServerAuth
 
 
-class BaseEvent:
+class BaseEvent(abc.ABC):
     """
     Base event for all the concurrent events.
     """

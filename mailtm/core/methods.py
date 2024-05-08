@@ -8,7 +8,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 import typing as t
 
-
 if t.TYPE_CHECKING:
     from mailtm.server.srv import MailServer
 

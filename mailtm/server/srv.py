@@ -2,16 +2,14 @@ import typing as t
 import asyncio
 
 from mailtm.core.methods import ServerAuth
-from mailtm.server.events import (
-    BaseEvent,
-    NewMessage,
-    AttachServer
-)
+from mailtm.server.events import BaseEvent, NewMessage, AttachServer
 from mailtm.abc.modals import Message, Domain
 from mailtm.abc.generic import Token
 from mailtm.impls.xclient import AsyncMail
 
 EventT = t.TypeVar(name="EventT", bound=BaseEvent)
+
+
 class MailServer:
     def __init__(self, server_auth: ServerAuth) -> None:
         self.handlers: t.Dict[
@@ -30,7 +28,7 @@ class MailServer:
     def on_new_message(self, func: t.Callable[[NewMessage], t.Awaitable[None]]):
         if NewMessage not in self.handlers:
             self.handlers[NewMessage] = []
-        self.handlers[NewMessage].append(func) #type: ignore
+        self.handlers[NewMessage].append(func)  # type: ignore
         return func
 
     async def dispatch(self, event: BaseEvent) -> None:
@@ -45,7 +43,12 @@ class MailServer:
                     self._last_msg[0] = msg_view.messages[0]
                 else:
                     self._last_msg.append(msg_view.messages[0])
-                new_message_event = NewMessage('NewMessage', client=self.mail_client, _server= AttachServer(self), new_message= msg_view.messages[0])
+                new_message_event = NewMessage(
+                    "NewMessage",
+                    client=self.mail_client,
+                    _server=AttachServer(self),
+                    new_message=msg_view.messages[0],
+                )
                 await self.dispatch(new_message_event)
                 return msg_view.messages[0]
         return None
@@ -54,10 +57,13 @@ class MailServer:
         try:
             print("Runner started...")
             while True:
+                await asyncio.sleep(1)
                 await self._check_for_new_messages()
         except Exception as e:
             print(f"Error in runner: {e}")
-
+            
+            
     def run(self):
         print("Running server...")
+        
         asyncio.run(self.runner())

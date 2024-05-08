@@ -1,9 +1,9 @@
-try:
-    from mailtm.server.events import NewMessage
-    from mailtm.core.methods import ServerAuth
-    from mailtm.server.srv import MailServer
-except Exception:
-    print("Cant")
+from mailtm.server.events import NewMessage
+
+from mailtm.core.methods import ServerAuth
+
+from mailtm.server.srv import MailServer
+
 
 print("Creating MailServer instance...")
 cs = MailServer(
@@ -13,9 +13,10 @@ cs = MailServer(
     )
 )
 
+
 @cs.on_new_message
-async def event(event: NewMessage): 
+async def event(event: NewMessage):
     print(event.new_message.text)
-print("ms running")
+
 
 cs.run()
