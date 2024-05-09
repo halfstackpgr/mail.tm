@@ -145,7 +145,9 @@ class ViewSearch(msgspec.Struct):
     The URL template of the view.
     """
 
-    variable_representation: str = msgspec.field(name="hydra:variableRepresentation")
+    variable_representation: str = msgspec.field(
+        name="hydra:variableRepresentation"
+    )
     """
     The representation of variables in the view.
     """

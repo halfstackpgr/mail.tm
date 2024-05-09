@@ -10,7 +10,9 @@ class BaseEvent:
     Base event for all the concurrent events.
     """
 
-    def __init__(self, event: str, client: AsyncMail, _server: AttachServer) -> None:
+    def __init__(
+        self, event: str, client: AsyncMail, _server: AttachServer
+    ) -> None:
         self.__server = _server
         self.event = event
         self.client = client
@@ -19,11 +21,15 @@ class BaseEvent:
 
 class RecieveMessage(BaseEvent):
     """
-    Event triggered when a message is recieved.
+    Event triggered when a message is received.
     """
 
     def __init__(
-        self, event: str, client: AsyncMail, _server: AttachServer, new_message: Message
+        self,
+        event: str,
+        client: AsyncMail,
+        _server: AttachServer,
+        new_message: Message,
     ) -> None:
         self.new_message = new_message
         super().__init__(event, client, _server)
@@ -39,7 +45,7 @@ class RecieveMessage(BaseEvent):
 
 class MessageDelete(BaseEvent):
     """
-    Event triggered when a message get's deleted using the server instance.
+    Event triggered when a message  gets deleted using the server instance.
 
     `Note`: This won't get triggered if the client is used to delete any message
     """
@@ -95,7 +101,9 @@ class ServerStarted(BaseEvent):
     Event triggered when the server is started.
     """
 
-    def __init__(self, event: str, client: AsyncMail, _server: AttachServer) -> None:
+    def __init__(
+        self, event: str, client: AsyncMail, _server: AttachServer
+    ) -> None:
         super().__init__(event, client, _server)
 
 

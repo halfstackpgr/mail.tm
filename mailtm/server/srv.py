@@ -7,39 +7,42 @@ from mailtm.abc.modals import Message, Domain
 from mailtm.abc.generic import Token
 from mailtm.impls.xclient import AsyncMail
 
-T = t.TypeVar('T', bound=ServerEvents)
+T = t.TypeVar("T", bound=ServerEvents)
+
 
 class MailServer:
     def __init__(self, server_auth: ServerAuth) -> None:
         self.handlers: t.Dict[
             t.Type[ServerEvents],
-            t.List[t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]]],
+            t.List[
+                t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]]
+            ],
         ] = {}
         self._server_auth = server_auth
         self._last_msg: t.List[Message] = []
         self._last_domain: t.List[Domain] = []
         self.mail_client = AsyncMail(
             account_token=Token(
-                id=self._server_auth.account_id, token=self._server_auth.account_token
+                id=self._server_auth.account_id,
+                token=self._server_auth.account_token,
             )
         )
 
     def subscribe(
-            self: t.Any, event: t.Type[T]
-        ) -> t.Callable[
-            [t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]]],
-            t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]],
-        ]:
-            def decorator(
-                func: t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]],
-            ) -> t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]]:
-                if event not in self.handlers:
-                    self.handlers[event] = []
-                self.handlers[event].append(func)
-                return func
+        self: t.Any, event: t.Type[T]
+    ) -> t.Callable[
+        [t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]]],
+        t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]],
+    ]:
+        def decorator(
+            func: t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]],
+        ) -> t.Callable[[ServerEvents], t.Coroutine[t.Any, t.Any, None]]:
+            if event not in self.handlers:
+                self.handlers[event] = []
+            self.handlers[event].append(func)
+            return func
 
-            return decorator
-
+        return decorator
 
     async def dispatch(self, event: ServerEvents) -> None:
         if event.__class__ in self.handlers:

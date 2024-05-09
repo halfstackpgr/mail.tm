@@ -3,12 +3,15 @@ import typing as t
 from .srv import MailServer
 from ..abc.modals import Message, Domain
 
-class Server(MailServer):
 
+class Server(MailServer):
     async def _check_for_new_messages(self) -> t.Optional[Message]:
         msg_view = await self.mail_client.get_messages()
         if msg_view and msg_view.messages:
-            if not self._last_msg or self._last_msg[0].id != msg_view.messages[0].id:
+            if (
+                not self._last_msg
+                or self._last_msg[0].id != msg_view.messages[0].id
+            ):
                 if self._last_msg:
                     self._last_msg[0] = msg_view.messages[0]
                 else:
