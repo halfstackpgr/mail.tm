@@ -17,7 +17,7 @@ class BaseEvent:
         pass
 
 
-class RecieveMessage(BaseEvent):
+class NewMessage(BaseEvent):
     """
     Event triggered when a message is recieved.
     """
@@ -99,21 +99,12 @@ class ServerStarted(BaseEvent):
         super().__init__(event, client, _server)
 
 
-class ServerEnded:
+class ServerCalledOff(BaseEvent):
     """
     Event triggered when the server is ended.
     """
 
+    ...
 
-ServerEvents = t.Union[
-    ServerStarted,
-    ServerEnded,
-    DomainChange,
-    NewAccountCreated,
-    AccountSwitched,
-    AccountDeleted,
-    RecieveMessage,
-    MessageDelete,
-]
 
-Events = t.TypeVar("Events", bound=ServerEvents)
+EventT = t.TypeVar("EventT", bound=BaseEvent)
