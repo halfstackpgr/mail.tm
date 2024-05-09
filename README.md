@@ -3,11 +3,15 @@
 
 <div align="center">
   <h1>Mail.tm</h1>
-  <text>Stack Development Kit (Python)</text>
+  <text>Stack Development Kit (Python)</br></text>
+    <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v1.json" alt="Ruff">
+    <img src="https://github.com/halfstackpgr/py-codeforces/actions/workflows/python-publish.yml/badge.svg" alt="Passing Package">
+    <img src="https://img.shields.io/badge/python-Strict-checking?style=plastic&logo=python&label=Type-Checking&labelColor=yellow" alt="Static Badge">
 </div>
 
 >[!CAUTION]
-> This library is still under development. And is **NOT SUITABLE** for installation.
+> This library is still under development.
+> Can be installed though bugs might still exist.
 > It might crash everything. 
 
 ## Introduction
