@@ -41,52 +41,51 @@ class AsyncMail:
         body: t.Optional[t.Any] = None,
         params: t.Optional[t.Dict[str, str]] = None,
     ) -> t.Optional[bytes]:
-        async with self._client as session:
-            if method == "GET":
-                result = await session.get(url=url, params=params)
-            elif method == "POST":
-                result = await session.post(url=url, json=body)
+        if method == "GET":
+            result = await self._client.get(url=url, params=params)
+        elif method == "POST":
+            result = await self._client.post(url=url, json=body)
 
-            elif method == "DELETE":
-                result = await session.delete(url=url, params=params)
+        elif method == "DELETE":
+            result = await self._client.delete(url=url, params=params)
 
-            elif method == "PATCH":
-                result = await session.patch(url=url, json=body)
-            else:
-                raise MethodNotAllowed("Report this as a bug on GitHub")
+        elif method == "PATCH":
+            result = await self._client.patch(url=url, json=body)
+        else:
+            raise MethodNotAllowed("Report this as a bug on GitHub")
 
-            if result.status == 200:
-                return await result.read()
-            elif result.status == 400:
-                raise MissingArgument(
-                    "Something in your payload is missing! Or, the payload isn't there at all."
-                )
-            elif result.status == 401:
-                raise AccountTokenInvalid(
-                    "Your token isn't correct (Or the headers hasn't a token at all!). Remember, every request (Except POST /accounts and POST /token) should be authenticated with a Bearer token!"
-                )
-            elif result.status == 404:
-                raise EntityNotFound(
-                    "You're trying to access an account that doesn't exist? Or maybe reading a non-existing message? Go check that!"
-                )
-            elif result.status == 405:
-                raise MethodNotAllowed(
-                    "Maybe you're trying to GET a /token or POST a /messages. Check the path you're trying to make a request to and check if the method is the correct one."
-                )
-            elif result.status == 418:
-                raise RefusedToProcess(
-                    "Server is a teapot. And refused to process your request at the moment. Kindly contact the developers for further details."
-                )
-            elif result.status == 422:
-                raise EntityNotProcessable(
-                    "Some went wrong on your payload. Like, the username of the address while creating the account isn't long enough, or, the account's domain isn't correct. Things like that."
-                )
-            elif result.status == 429:
-                raise RatelimitError(
-                    "You exceeded the limit of 8 requests per second! Try delaying the request by one second!"
-                )
-            else:
-                raise ValueError("Unknown Error")
+        if result.status == 200:
+            return await result.read()
+        elif result.status == 400:
+            raise MissingArgument(
+                "Something in your payload is missing! Or, the payload isn't there at all."
+            )
+        elif result.status == 401:
+            raise AccountTokenInvalid(
+                "Your token isn't correct (Or the headers hasn't a token at all!). Remember, every request (Except POST /accounts and POST /token) should be authenticated with a Bearer token!"
+            )
+        elif result.status == 404:
+            raise EntityNotFound(
+                "You're trying to access an account that doesn't exist? Or maybe reading a non-existing message? Go check that!"
+            )
+        elif result.status == 405:
+            raise MethodNotAllowed(
+                "Maybe you're trying to GET a /token or POST a /messages. Check the path you're trying to make a request to and check if the method is the correct one."
+            )
+        elif result.status == 418:
+            raise RefusedToProcess(
+                "Server is a teapot. And refused to process your request at the moment. Kindly contact the developers for further details."
+            )
+        elif result.status == 422:
+            raise EntityNotProcessable(
+                "Some went wrong on your payload. Like, the username of the address while creating the account isn't long enough, or, the account's domain isn't correct. Things like that."
+            )
+        elif result.status == 429:
+            raise RatelimitError(
+                "You exceeded the limit of 8 requests per second! Try delaying the request by one second!"
+            )
+        else:
+            raise ValueError("Unknown Error")
 
     async def _create_url(self, other_literal: str) -> str:
         return urllib.parse.urljoin(self._base_url, other_literal)

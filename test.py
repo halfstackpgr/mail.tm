@@ -16,7 +16,6 @@ cs = MailServer(
 
 @cs.on_new_message
 async def event(event: NewMessage):
-    print(event.new_message.text)
-
+    ...
 
 cs.run()

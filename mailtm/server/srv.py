@@ -1,13 +1,12 @@
 import typing as t
 import asyncio
 
-from mailtm.core.methods import ServerAuth
-from mailtm.server.events import BaseEvent, NewMessage, AttachServer
+from mailtm.core.methods import ServerAuth, AttachServer
+from mailtm.server.events import BaseEvent, NewMessage
 from mailtm.abc.modals import Message, Domain
 from mailtm.abc.generic import Token
 from mailtm.impls.xclient import AsyncMail
 
-EventT = t.TypeVar(name="EventT", bound=BaseEvent)
 
 
 class MailServer:
@@ -36,6 +35,7 @@ class MailServer:
             await handler(event)
 
     async def _check_for_new_messages(self) -> t.Optional[Message]:
+        print("Checked For New Message: ")
         msg_view = await self.mail_client.get_messages()
         if msg_view and msg_view.messages:
             if not self._last_msg or self._last_msg[0].id != msg_view.messages[0].id:
@@ -54,16 +54,15 @@ class MailServer:
         return None
 
     async def runner(self) -> None:
-        try:
-            print("Runner started...")
-            while True:
-                await asyncio.sleep(1)
-                await self._check_for_new_messages()
-        except Exception as e:
-            print(f"Error in runner: {e}")
-            
+        print("Runner started...")
+        while True:
+            await asyncio.sleep(1)
+            await self._check_for_new_messages()
+        
             
     def run(self):
         print("Running server...")
-        
-        asyncio.run(self.runner())
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(self.runner())
+        loop.close()
+

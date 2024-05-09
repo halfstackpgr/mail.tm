@@ -107,4 +107,4 @@ class ServerCalledOff(BaseEvent):
     ...
 
 
-EventT = t.TypeVar(name="EventT", bound=BaseEvent)
+EventT = t.TypeVar("EventT", bound=BaseEvent)
