@@ -1,14 +1,22 @@
 from colorama import Fore
-def version()->None:
-    print(f'''
-            {Fore.CYAN}Mail.tm{Fore.RESET}
-        Stack Development Kit (Python)
+import datetime
 
-Developed by: GitHub: halfstackpgr
 
-Current Version: 0.1.0
+def version() -> None:
+    with open("mailtm/server/assets/banner.txt", "r", encoding="utf-8") as f:
+        text = f.read()
+        details = text.format(
+            time=datetime.datetime.now(),
+            date=f"{datetime.date.today()}",
+            mail=Fore.CYAN,
+            reset=Fore.RESET,
+            sdk=Fore.MAGENTA,
+            ssb=Fore.GREEN,
+            version=Fore.LIGHTBLUE_EX,
+            info=Fore.LIGHTMAGENTA_EX,
+            issues=Fore.RED,
+            warning=Fore.LIGHTYELLOW_EX,
+            dateandtime=Fore.GREEN,
+        )
 
-For usage, visit: https://www.github.com/halfstackpgr/Mail.tm
-''')
-    
-version()
+        print(details)
