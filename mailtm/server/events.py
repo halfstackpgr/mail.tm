@@ -13,7 +13,7 @@ class BaseEvent:
     def __init__(
         self, event: str, client: AsyncMail, _server: AttachServer
     ) -> None:
-        self.__server = _server
+        self._server = _server
         self.event = event
         self.client = client
         pass
@@ -36,6 +36,14 @@ class NewMessage(BaseEvent):
 
     async def delete_message(self) -> None:
         if self.new_message.message_id is not None:
+            await self._server.server.dispatch(
+                MessageDelete(
+                    "MessageDelete",
+                    self.client,
+                    self.new_message,
+                    self._server,
+                )
+            )
             await self.client.delete_message(self.new_message.message_id)
 
     async def mark_as_seen(self) -> None:
@@ -66,7 +74,15 @@ class DomainChange(BaseEvent):
     Event triggered when the email domain is changed.
     """
 
-    new_domain: Domain
+    def __init__(
+        self,
+        new_domain: Domain,
+        event: str,
+        client: AsyncMail,
+        _server: AttachServer,
+    ) -> None:
+        self.new_domain = new_domain
+        super().__init__(event, client, _server)
 
 
 class AccountSwitched(BaseEvent):
