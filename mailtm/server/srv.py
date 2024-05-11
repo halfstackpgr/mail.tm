@@ -31,7 +31,7 @@ class MailServerBase:
         banner: t.Optional[bool] = True,
         banner_path: t.Optional[t.Union[pathlib.Path, str]] = default_banner,
         suppress_errors: t.Optional[bool] = False,
-        enable_logging: t.Optional[bool] = False
+        enable_logging: t.Optional[bool] = False,
     ) -> None:
         """
         Initializes a new instance of the `MailServerBase` class.
@@ -73,29 +73,32 @@ class MailServerBase:
         severity: t.Literal["INFO", "WARNING", "ERROR"] = "INFO",
     ) -> None:
         if self._logging_enabled is True:
+            current_time = datetime.datetime.now().strftime(
+                "%a %m/%d/%Y at %I:%M%p"
+            )
             if severity == "INFO":
                 print(
                     Fore.LIGHTGREEN_EX
-                    + f"[+]{Fore.RESET} At {datetime.datetime.now()} "
+                    + f"[+]{Fore.RESET} On {current_time} "
                     + message
                 )
             if self._suppress_errors is False:
                 if severity == "WARNING":
                     print(
                         Fore.LIGHTYELLOW_EX
-                        + f"[!]{Fore.RESET} At {datetime.datetime.now()} "
+                        + f"[!]{Fore.RESET} On {current_time} "
                         + message
                     )
                 elif severity == "ERROR":
                     print(
                         Fore.LIGHTRED_EX
-                        + f"[-]{Fore.RESET} At {datetime.datetime.now()} "
+                        + f"[-]{Fore.RESET} On {current_time} "
                         + message
                     )
             else:
                 print(
-                    Fore.WHITE
-                    + f"[?] Unrecognized severity: {datetime.datetime.now()} "
+                    Fore.LIGHTWHITE_EX
+                    + f"[?] Unrecognized severity: {current_time} "
                     + message
                 )
 
@@ -180,7 +183,9 @@ class MailServerBase:
                     new_message=msg_view.messages[0],
                 )
                 await self.dispatch(new_message_event)
-                self.log(message=f"RECIEVED new message from: {msg_view.messages[0].message_from.address}") #type: ignore
+                self.log(
+                    message=f"RECEIVED new message from: {msg_view.messages[0].message_from.address}"  # type: ignore
+                )
         return None
 
     async def _check_for_new_domain(self) -> t.Optional[Domain]:
@@ -208,7 +213,24 @@ class MailServerBase:
                     new_domain=domain_view.domains[0],
                 )
                 await self.dispatch(new_domain_event)
-                self.log(message=f"Domain Changed: {domain_view.domains[0].domain_name}", severity="WARNING")
+                self.log(
+                    message=f"Domain Changed: {domain_view.domains[0].domain_name}",
+                    severity="WARNING",
+                )
+
+    async def shutdown(self) -> None:
+        await self.mail_client.close()
+        self.log(
+            message="The mail client session has been called off.",
+            severity="WARNING",
+        )
+        loop = asyncio.get_event_loop()
+        loop.stop()
+        self.log(
+            message="Server shuts down on user's request. Goodbye!",
+            severity="WARNING",
+        )
+
     async def _banner(self) -> None:
         """
         Asynchronously prints a banner from the specified file path if it exists.
@@ -295,7 +317,7 @@ class MailServerBase:
                 message=f"Exception while running server:\n{Fore.LIGHTWHITE_EX+str(e)+Fore.RESET}"
             )
 
-    def run(self)->None:
+    def run(self) -> None:
         """
         Executes the main server logic by running the event runner within asyncio event loop.
         """
@@ -304,7 +326,4 @@ class MailServerBase:
             loop.run_until_complete(self.runner())
             loop.close()
         except KeyboardInterrupt:
-            self.log(
-                message="Server is closing it's operations. Goodbye!",
-                severity="WARNING",
-            )
+            asyncio.run(self.shutdown())

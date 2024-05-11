@@ -1,4 +1,33 @@
-import typing as t
+"""
+Module for events that get triggered in the Mail.tm server.
+
+This module contains a set of classes representing different events that get triggered
+in the `Mail.tm` server. These events can be used to create callbacks for when certain
+actions happen in the server.
+
+- `NewMessage`: Triggered when a new message is received.
+- `MessageDelete`: Triggered when a message is deleted using the server instance.
+- `DomainChange`: Triggered when the email domain is changed.
+- `AccountSwitched`: Triggered when the account is switched to a different account.
+- `NewAccountCreated`: Triggered when a new account is created.
+- `AccountDeleted`: Triggered when an account is deleted.
+- `ServerStarted`: Triggered when the server is started.
+- `ServerCalledOff`: Triggered when the server is ended.
+
+"""
+
+__all__ = [
+    "NewMessage",
+    "MessageDelete",
+    "DomainChange",
+    "AccountSwitched",
+    "NewAccountCreated",
+    "AccountDeleted",
+    "ServerStarted",
+    "ServerCalledOff",
+]
+
+
 from ..impls.xclient import AsyncMail
 from ..core.methods import AttachServer
 from ..abc.modals import Message, Domain, Account
@@ -129,6 +158,3 @@ class ServerCalledOff(BaseEvent):
     """
 
     ...
-
-
-EventT = t.TypeVar("EventT", bound=BaseEvent)
