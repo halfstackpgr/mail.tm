@@ -128,8 +128,17 @@ class NewAccountCreated(BaseEvent):
     Event triggered when a new account is created.
     """
 
-    new_account_auth: ServerAuth
-    new_account: Account
+    def __init__(
+        self,
+        new_account_auth: ServerAuth,
+        new_account: Account,
+        event: str,
+        client: AsyncMail,
+        _server: AttachServer,
+    ) -> None:
+        self.new_account_aut = new_account_auth
+        self.new_account = new_account
+        super().__init__(event, client, _server)
 
 
 class AccountDeleted(BaseEvent):

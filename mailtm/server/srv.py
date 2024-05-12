@@ -131,17 +131,28 @@ class MailServerBase:
     def on_new_message(
         self, func: t.Callable[[NewMessage], t.Awaitable[None]]
     ):
-        if NewMessage not in self.handlers:
-            self.handlers[NewMessage] = []
-        self.handlers[NewMessage].append(func)  # type: ignore
-        return func
+        """
+        Registers a callback function to handle new messages.
+
+        Args:
+            func (Callable[[NewMessage], Awaitable[None]]): The callback function to handle new messages.
+
+        Returns:
+            The result of the extracted function call.
+        """
+
+        return self._extracted_from_on_new_domain_4(NewMessage, func)
 
     def on_new_domain(
         self, func: t.Callable[[DomainChange], t.Awaitable[None]]
     ):
-        if DomainChange not in self.handlers:
-            self.handlers[DomainChange] = []
-        self.handlers[DomainChange].append(func)  # type: ignore
+        return self._extracted_from_on_new_domain_4(DomainChange, func)
+
+    # TODO Rename this here and in `on_new_message` and `on_new_domain`
+    def _extracted_from_on_new_domain_4(self, arg0, func):
+        if arg0 not in self.handlers:
+            self.handlers[arg0] = []
+        self.handlers[arg0].append(func)
         return func
 
     async def dispatch(self, event: BaseEvent) -> None:
@@ -167,25 +178,28 @@ class MailServerBase:
             None
         """
         msg_view = await self.mail_client.get_messages()
-        if msg_view and msg_view.messages:
-            if (
+        if (
+            msg_view
+            and msg_view.messages
+            and (
                 not self._last_msg
                 or self._last_msg[0].id != msg_view.messages[0].id
-            ):
-                if self._last_msg:
-                    self._last_msg[0] = msg_view.messages[0]
-                else:
-                    self._last_msg.append(msg_view.messages[0])
-                new_message_event = NewMessage(
-                    "NewMessage",
-                    client=self.mail_client,
-                    _server=AttachServer(self),
-                    new_message=msg_view.messages[0],
-                )
-                await self.dispatch(new_message_event)
-                self.log(
-                    message=f"RECEIVED new message from: {msg_view.messages[0].message_from.address}"  # type: ignore
-                )
+            )
+        ):
+            if self._last_msg:
+                self._last_msg[0] = msg_view.messages[0]
+            else:
+                self._last_msg.append(msg_view.messages[0])
+            new_message_event = NewMessage(
+                "NewMessage",
+                client=self.mail_client,
+                _server=AttachServer(self),
+                new_message=msg_view.messages[0],
+            )
+            await self.dispatch(new_message_event)
+            self.log(
+                message=f"RECEIVED new message from: {msg_view.messages[0].message_from.address}"  # type: ignore
+            )
         return None
 
     async def _check_for_new_domain(self) -> t.Optional[Domain]:
@@ -197,26 +211,29 @@ class MailServerBase:
             t.Optional[Domain]: The newly detected domain, if any.
         """
         domain_view = await self.mail_client.get_domains()
-        if domain_view and domain_view.domains:
-            if (
+        if (
+            domain_view
+            and domain_view.domains
+            and (
                 not self._last_domain
                 or self._last_domain[0].id != domain_view.domains[0].id
-            ):
-                if self._last_domain:
-                    self._last_domain[0] = domain_view.domains[0]
-                else:
-                    self._last_domain.append(domain_view.domains[0])
-                new_domain_event = DomainChange(
-                    event="DomainChange",
-                    client=self.mail_client,
-                    _server=AttachServer(self),
-                    new_domain=domain_view.domains[0],
-                )
-                await self.dispatch(new_domain_event)
-                self.log(
-                    message=f"Domain Changed: {domain_view.domains[0].domain_name}",
-                    severity="WARNING",
-                )
+            )
+        ):
+            if self._last_domain:
+                self._last_domain[0] = domain_view.domains[0]
+            else:
+                self._last_domain.append(domain_view.domains[0])
+            new_domain_event = DomainChange(
+                event="DomainChange",
+                client=self.mail_client,
+                _server=AttachServer(self),
+                new_domain=domain_view.domains[0],
+            )
+            await self.dispatch(new_domain_event)
+            self.log(
+                message=f"Domain Changed: {domain_view.domains[0].domain_name}",
+                severity="WARNING",
+            )
 
     async def shutdown(self) -> None:
         await self.mail_client.close()
@@ -308,7 +325,7 @@ class MailServerBase:
                     await self._check_for_new_domain()
                 if not self.handlers:
                     await self.mail_client.close()
-                    raise Exception(
+                    raise RuntimeError(
                         "It seems like you have not subscribed to any events."
                     )
         except Exception as e:
