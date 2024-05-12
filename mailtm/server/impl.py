@@ -1,20 +1,19 @@
-from pathlib import Path
-from mailtm.server.srv import default_banner
-from .srv import MailServerBase
-from ..core.methods import AttachServer, ServerAuth
-from ..abc.modals import Account
-from ..impls.pullers import xget
+import pathlib
 import typing as t
+
 from .events import (
     NewAccountCreated,
-    DomainChange,
-    NewMessage,
     MessageDelete,
     AccountSwitched,
     AccountDeleted,
-    ServerStarted,
-    ServerCalledOff,
 )
+from .srv import MailServerBase, default_banner
+from .cache import CacheType
+
+from ..core.methods import AttachServer, ServerAuth
+from ..abc.modals import Account
+from ..abc.generic import Token
+from ..impls.pullers import xget
 
 
 class MailServer(MailServerBase):
@@ -59,12 +58,11 @@ class MailServer(MailServerBase):
         server_auth: ServerAuth,
         pooling_rate: int | None,
         banner: bool | None = True,
-        banner_path: Path | str | None = default_banner,
+        banner_path: pathlib.Path | str | None = default_banner,
         suppress_errors: bool | None = False,
         enable_logging: bool | None = False,
     ) -> None:
         self.pull = xget()
-        self.collector: t.Dict[str, str] = {}
         super().__init__(
             server_auth,
             pooling_rate,
@@ -74,16 +72,11 @@ class MailServer(MailServerBase):
             enable_logging,
         )
 
-    async def cache(self):
-        def get_created_accounts(
-            account_id: str,
-        ) -> t.Optional[t.List[Account]]: ...
-
     async def create_account(
         self, account_address: str, account_password: str
     ) -> t.Optional[Account]:
         """
-        Asynchronously creates a new account with the given email address and password.
+        Creates a new account with the given email address and password.
 
         Args:
             account_address (str): The email address of the new account.
@@ -114,29 +107,98 @@ class MailServer(MailServerBase):
                     NewAccountCreated(
                         new_account=new_account,
                         new_account_auth=account_auth,
-                        event="NewAccountCreated",
+                        event="A new account got created.",
                         client=self.mail_client,
                         _server=AttachServer(self),
                     )
                 )
-                return new_account
+                self.collector.add_item_to_cache(
+                    cache_type=CacheType.NEW_ACCOUNTS, item=new_account
+                )
+            return new_account
         except Exception as e:
             self.log(
                 message="Could not create account: " + str(e), severity="ERROR"
             )
+            return None
+
+    async def delete_message(self, message_id: str) -> None:
+        message = await self.mail_client.get_message(message_id=message_id)
+        if message:
+            try:
+                await self.mail_client.delete_message(message_id)
+                await self.dispatch(
+                    MessageDelete(
+                        "Deleted a message.",
+                        deleted_message=message,
+                        client=self.mail_client,
+                        _server=AttachServer(self),
+                    )
+                )
+                self.collector.add_item_to_cache(
+                    cache_type=CacheType.OLD_MESSAGE, item=message
+                )
+            except Exception as e:
+                self.log(
+                    message="Could not delete message: " + str(e),
+                    severity="ERROR",
+                )
+                return None
+
+    async def switch_account(
+        self, new_account_token: t.Union[Token, str]
+    ) -> None:
+        try:
+            if isinstance(new_account_token, Token):
+                self.mail_client._client.headers.update(
+                    {"Authorization": f"Bearer {new_account_token.token}"}
+                )
+                self.log(
+                    message=f"Switched to new account with ID: {new_account_token.id}",
+                    severity="WARNING",
+                )
+            if isinstance(new_account_token, str):
+                self.mail_client._client.headers.update(
+                    {"Authorization": f"Bearer {new_account_token}"}
+                )
+                self.log(
+                    message=f"Switched to new account with Token: {new_account_token}",
+                    severity="WARNING",
+                )
+
+            await self.dispatch(
+                AccountSwitched(
+                    event="Account switched",
+                    client=self.mail_client,
+                    _server=AttachServer(self),
+                )
+            )
+
+        except Exception as e:
+            self.log(
+                message="Could not switch account: " + str(e), severity="ERROR"
+            )
+
+    async def delete_account(self, account_id: str) -> None:
+        try:
+            await self.mail_client.delete_account(account_id)
+            self.log(message="Deleted account with ID: " + account_id)
+            await self.dispatch(
+                AccountDeleted(
+                    event=f"Account has been deleted with the ID: {account_id}",
+                    client=self.mail_client,
+                    _server=AttachServer(self),
+                )
+            )
+        except Exception as e:
+            self.log(
+                message="Could not delete account: " + str(e), severity="ERROR"
+            )
 
     async def shutdown(self) -> None:
-        await self.dispatch(
-            ServerCalledOff(
-                "ServerCalledOff", self.mail_client, AttachServer(self)
-            )
-        )
+        self.collector.clean_cache()
         return await super().shutdown()
 
     async def runner(self) -> None:
-        await self.dispatch(
-            ServerStarted(
-                "ServerStarted", self.mail_client, AttachServer(self)
-            )
-        )
+        self.collector.build_cache()
         return await super().runner()

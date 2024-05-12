@@ -9,7 +9,7 @@ from dataclasses import dataclass
 import typing as t
 
 if t.TYPE_CHECKING:
-    from mailtm.server.srv import MailServer
+    from mailtm.server.srv import MailServerBase
 
 
 @dataclass
@@ -114,4 +114,4 @@ class ServerAuth:
 
 @dataclass
 class AttachServer:
-    server: MailServer
+    server: MailServerBase

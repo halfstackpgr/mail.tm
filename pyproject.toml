@@ -19,3 +19,6 @@ mailtm = "mailtm.cli:call_version"
 [tool.ruff]
 line-length = 79
 indent-width = 4
+
+[tool.towncrier]
+directory = "changes"

@@ -1,4 +1,4 @@
-from mailtm.server.events import NewMessage, ServerStarted
+from mailtm.server.events import NewMessage, ServerStarted, ServerCalledOff
 
 from mailtm.core.methods import ServerAuth
 
@@ -26,9 +26,10 @@ async def event(event: NewMessage):
 
 @cs.subscribe(ServerStarted)
 async def sevent(event: ServerStarted):
-    await event.client.close()
-    print("Server started!")
-    
+    print("CHAD")
 
+@cs.subscribe(ServerStarted)
+async def repent(event: ServerStarted):
+    await cs.create_account("lund", "lunddd")
 
 cs.run()

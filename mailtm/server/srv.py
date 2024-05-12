@@ -6,7 +6,14 @@ import pathlib
 
 from colorama import Fore
 from mailtm.core.methods import ServerAuth, AttachServer
-from mailtm.server.events import BaseEvent, NewMessage, DomainChange
+from mailtm.server.cache import InternalCache, CacheType
+from mailtm.server.events import (
+    BaseEvent,
+    NewMessage,
+    DomainChange,
+    ServerStarted,
+    ServerCalledOff,
+)
 from mailtm.abc.modals import Message, Domain
 from mailtm.abc.generic import Token
 from mailtm.impls.xclient import AsyncMail
@@ -66,6 +73,7 @@ class MailServerBase:
                 token=self._server_auth.account_token,
             )
         )
+        self.collector = InternalCache()
 
     def log(
         self,
@@ -197,12 +205,15 @@ class MailServerBase:
                 new_message=msg_view.messages[0],
             )
             await self.dispatch(new_message_event)
+            self.collector.add_item_to_cache(
+                CacheType.NEW_MESSAGE, msg_view.messages[0]
+            )
             self.log(
                 message=f"RECEIVED new message from: {msg_view.messages[0].message_from.address}"  # type: ignore
             )
         return None
 
-    async def _check_for_new_domain(self) -> t.Optional[Domain]:
+    async def _check_for_new_domain(self) -> None:
         """
         Asynchronously checks for a new domain by retrieving domain information from the mail client.
         If a new domain is detected, triggers a DomainChange event with the new domain details.
@@ -230,6 +241,9 @@ class MailServerBase:
                 new_domain=domain_view.domains[0],
             )
             await self.dispatch(new_domain_event)
+            self.collector.add_item_to_cache(
+                CacheType.NEW_MESSAGE, domain_view.domains[0]
+            )
             self.log(
                 message=f"Domain Changed: {domain_view.domains[0].domain_name}",
                 severity="WARNING",
@@ -237,6 +251,13 @@ class MailServerBase:
 
     async def shutdown(self) -> None:
         await self.mail_client.close()
+        await self.dispatch(
+            ServerCalledOff(
+                "Server has been called off",
+                self.mail_client,
+                AttachServer(server=self),
+            )
+        )
         self.log(
             message="The mail client session has been called off.",
             severity="WARNING",
@@ -298,6 +319,11 @@ class MailServerBase:
         """
         if self._banner_enabled is True:
             await self._banner()
+        await self.dispatch(
+            ServerStarted(
+                "ServerStarted", self.mail_client, AttachServer(self)
+            )
+        )
         try:
             self.log(
                 message="Server-> Session Started: "
@@ -316,6 +342,10 @@ class MailServerBase:
             self.log(
                 message="Server-> Subscribed events: "
                 + str(len(self.handlers.keys()))
+            )
+            self.log(
+                message="Cache initialized. Created 4 maps.",
+                severity="WARNING",
             )
             while True:
                 await asyncio.sleep(self._pooling_rate or 1)

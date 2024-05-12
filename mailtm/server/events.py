@@ -45,7 +45,6 @@ class BaseEvent:
         self._server = _server
         self.event = event
         self.client = client
-        pass
 
 
 class NewMessage(BaseEvent):
@@ -166,4 +165,7 @@ class ServerCalledOff(BaseEvent):
     Event triggered when the server is ended.
     """
 
-    ...
+    def __init__(
+        self, event: str, client: AsyncMail, _server: AttachServer
+    ) -> None:
+        super().__init__(event, client, _server)

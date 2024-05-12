@@ -35,7 +35,7 @@ class Domain(msgspec.Struct):
     domain_name: t.Optional[str] = msgspec.field(name="domain", default=None)
     """
     Name of the domain provided by mail.tm
-    
+
     Example: @gmail.com, @goster.com
     """
     is_active: t.Optional[bool] = msgspec.field(name="isActive", default=None)

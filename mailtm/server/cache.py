@@ -1,7 +1,9 @@
+import sys
 import typing as t
 from enum import Enum
 
 from ..abc.modals import Account, Message, Domain
+
 
 class CacheType(Enum):
     """
@@ -137,6 +139,39 @@ class InternalCache:
             CacheType.NEW_MESSAGE: [],
             CacheType.OLD_MESSAGE: [],
         }
+
+    def add_item_to_cache(
+        self,
+        cache_type: CacheType,
+        item: t.Union[Message, Account, Domain],
+    ) -> None:
+        """
+        Adds an item to the internal cache of the InternalCache object.
+
+        Args:
+            cache_type (CacheType): The type of cache to add the item to.
+            item (Union[Message, Account, Domain]): The item to add to the cache.
+
+        Returns:
+            None
+        """
+        if isinstance(item, Message):
+            self.internal_memory_map[cache_type].append(item)  # type: ignore
+        elif isinstance(item, Account):
+            self.internal_memory_map[cache_type].append(item)  # type: ignore
+        elif isinstance(item, Domain):
+            self.internal_memory_map[cache_type].append(item)  # type: ignore
+        else:
+            pass
+
+    def get_cache_size(self) -> int:
+        """
+        Get the size of the internal cache.
+
+        Returns:
+            int: The size of the internal cache.
+        """
+        return sys.getsizeof(self.internal_memory_map)
 
     def clean_cache(self):
         """
