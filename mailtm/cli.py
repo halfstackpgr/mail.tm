@@ -24,4 +24,5 @@ def version() -> None:
 
         print(details)
 
+
 version()

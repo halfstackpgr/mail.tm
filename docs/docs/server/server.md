@@ -30,5 +30,3 @@ After importing the Server module,
 - Subsequently, the server's main body is implemented.
 - Since this server-like implementation relies solely on event dispatches, two types of decorators are provided to subscribe to any event.
 - The `.run()` function is used to execute the server through asynchronous loops.
-
-You'd find more about the methods in the documentation later.

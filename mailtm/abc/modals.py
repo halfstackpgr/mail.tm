@@ -43,9 +43,7 @@ class Domain(msgspec.Struct):
     If the domain is still active.
     """
 
-    is_private: t.Optional[bool] = msgspec.field(
-        name="isPrivate", default=None
-    )
+    is_private: t.Optional[bool] = msgspec.field(name="isPrivate", default=None)
     """
     If the domain is private. Private domains are not visible to the public.
     """
@@ -100,16 +98,12 @@ class Account(msgspec.Struct):
     The amount of quota used by the account.
     """
 
-    is_disabled: t.Optional[bool] = msgspec.field(
-        name="isDisabled", default=None
-    )
+    is_disabled: t.Optional[bool] = msgspec.field(name="isDisabled", default=None)
     """
     If the account is disabled.
     """
 
-    is_deleted: t.Optional[bool] = msgspec.field(
-        name="isDeleted", default=None
-    )
+    is_deleted: t.Optional[bool] = msgspec.field(name="isDeleted", default=None)
     """
     If the account is deleted.
     """
@@ -160,16 +154,12 @@ class Message(msgspec.Struct):
     Message ID.
     """
 
-    message_from: t.Optional[MessageFrom] = msgspec.field(
-        name="from", default=None
-    )
+    message_from: t.Optional[MessageFrom] = msgspec.field(name="from", default=None)
     """
     Details of the sender of the message.
     """
 
-    message_to: t.Optional[t.List[MessageTo]] = msgspec.field(
-        name="to", default=None
-    )
+    message_to: t.Optional[t.List[MessageTo]] = msgspec.field(name="to", default=None)
     """
     Details of the recipients of the message.
     """
@@ -184,9 +174,7 @@ class Message(msgspec.Struct):
     If the message has been seen by the recipient.
     """
 
-    is_deleted: t.Optional[bool] = msgspec.field(
-        name="isDeleted", default=None
-    )
+    is_deleted: t.Optional[bool] = msgspec.field(name="isDeleted", default=None)
     """
     If the message is deleted.
     """
@@ -215,9 +203,7 @@ class Message(msgspec.Struct):
     Size of the message in bytes.
     """
 
-    downloadUrl: t.Optional[str] = msgspec.field(
-        name="downloadUrl", default=None
-    )
+    downloadUrl: t.Optional[str] = msgspec.field(name="downloadUrl", default=None)
     """
     URL to download the message.
     """
@@ -297,9 +283,7 @@ class Source:
     The id attribute of the Source.
     """
 
-    download_url: t.Optional[str] = msgspec.field(
-        name="downloadUrl", default=None
-    )
+    download_url: t.Optional[str] = msgspec.field(name="downloadUrl", default=None)
     """
     The download URL attribute of the Source.
     """
@@ -322,9 +306,7 @@ class MessagePageView(msgspec.Struct):
     List of messages in the view.
     """
 
-    total_items: t.Optional[int] = msgspec.field(
-        name="hydra:totalItems", default=None
-    )
+    total_items: t.Optional[int] = msgspec.field(name="hydra:totalItems", default=None)
     """
     Total number of items in the view.
     """
@@ -356,9 +338,7 @@ class DomainPageView(msgspec.Struct):
     List of domains in the view.
     """
 
-    total_items: t.Optional[int] = msgspec.field(
-        name="hydra:totalItems", default=None
-    )
+    total_items: t.Optional[int] = msgspec.field(name="hydra:totalItems", default=None)
     """
     Total number of domains in the view.
     """

@@ -81,14 +81,10 @@ class MailServerBase:
         severity: t.Literal["INFO", "WARNING", "ERROR"] = "INFO",
     ) -> None:
         if self._logging_enabled is True:
-            current_time = datetime.datetime.now().strftime(
-                "%a %m/%d/%Y at %I:%M%p"
-            )
+            current_time = datetime.datetime.now().strftime("%a %m/%d/%Y at %I:%M%p")
             if severity == "INFO":
                 print(
-                    Fore.LIGHTGREEN_EX
-                    + f"[+]{Fore.RESET} On {current_time} "
-                    + message
+                    Fore.LIGHTGREEN_EX + f"[+]{Fore.RESET} On {current_time} " + message
                 )
             if self._suppress_errors is False:
                 if severity == "WARNING":
@@ -110,9 +106,7 @@ class MailServerBase:
                     + message
                 )
 
-    def subscribe(
-        self, event_type: t.Type[BaseEvent]
-    ) -> t.Callable[
+    def subscribe(self, event_type: t.Type[BaseEvent]) -> t.Callable[
         [t.Callable[[ServerSideEvents], t.Awaitable[None]]],
         t.Callable[[ServerSideEvents], t.Awaitable[None]],
     ]:
@@ -136,9 +130,7 @@ class MailServerBase:
 
         return decorator
 
-    def on_new_message(
-        self, func: t.Callable[[NewMessage], t.Awaitable[None]]
-    ):
+    def on_new_message(self, func: t.Callable[[NewMessage], t.Awaitable[None]]):
         """
         Registers a callback function to handle new messages.
 
@@ -151,9 +143,7 @@ class MailServerBase:
 
         return self._extracted_from_on_new_domain_4(NewMessage, func)
 
-    def on_new_domain(
-        self, func: t.Callable[[DomainChange], t.Awaitable[None]]
-    ):
+    def on_new_domain(self, func: t.Callable[[DomainChange], t.Awaitable[None]]):
         return self._extracted_from_on_new_domain_4(DomainChange, func)
 
     # TODO Rename this here and in `on_new_message` and `on_new_domain`
@@ -189,10 +179,7 @@ class MailServerBase:
         if (
             msg_view
             and msg_view.messages
-            and (
-                not self._last_msg
-                or self._last_msg[0].id != msg_view.messages[0].id
-            )
+            and (not self._last_msg or self._last_msg[0].id != msg_view.messages[0].id)
         ):
             if self._last_msg:
                 self._last_msg[0] = msg_view.messages[0]
@@ -279,9 +266,7 @@ class MailServerBase:
         """
         if self._banner_path is not None:
             try:
-                async with aiofiles.open(
-                    self._banner_path, "r", encoding="utf-8"
-                ) as f:
+                async with aiofiles.open(self._banner_path, "r", encoding="utf-8") as f:
                     text = await f.read()
                     details = text.format(
                         time=datetime.datetime.now(),
@@ -320,28 +305,18 @@ class MailServerBase:
         if self._banner_enabled is True:
             await self._banner()
         await self.dispatch(
-            ServerStarted(
-                "ServerStarted", self.mail_client, AttachServer(self)
-            )
+            ServerStarted("ServerStarted", self.mail_client, AttachServer(self))
         )
         try:
             self.log(
                 message="Server-> Session Started: "
                 + datetime.datetime.now().strftime("%H:%M:%S")
             )
+            self.log(message="Server-> Pooling rate: " + str(self._pooling_rate))
+            self.log(message="Server-> Logging enabled: " + str(self._logging_enabled))
+            self.log(message="Server-> Banner enabled: " + str(self._banner_enabled))
             self.log(
-                message="Server-> Pooling rate: " + str(self._pooling_rate)
-            )
-            self.log(
-                message="Server-> Logging enabled: "
-                + str(self._logging_enabled)
-            )
-            self.log(
-                message="Server-> Banner enabled: " + str(self._banner_enabled)
-            )
-            self.log(
-                message="Server-> Subscribed events: "
-                + str(len(self.handlers.keys()))
+                message="Server-> Subscribed events: " + str(len(self.handlers.keys()))
             )
             self.log(
                 message="Cache initialized. Created 4 maps.",

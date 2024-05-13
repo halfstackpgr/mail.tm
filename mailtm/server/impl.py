@@ -93,9 +93,7 @@ class MailServer(MailServerBase):
             new_account = await self.mail_client.create_account(
                 account_address, account_password
             )
-            token = await self.pull.get_account_token(
-                account_address, account_password
-            )
+            token = await self.pull.get_account_token(account_address, account_password)
             if token is not None and new_account is not None:
                 account_auth = ServerAuth(
                     account_token=token.token,
@@ -117,9 +115,7 @@ class MailServer(MailServerBase):
                 )
             return new_account
         except Exception as e:
-            self.log(
-                message="Could not create account: " + str(e), severity="ERROR"
-            )
+            self.log(message="Could not create account: " + str(e), severity="ERROR")
             return None
 
     async def delete_message(self, message_id: str) -> None:
@@ -145,9 +141,7 @@ class MailServer(MailServerBase):
                 )
                 return None
 
-    async def switch_account(
-        self, new_account_token: t.Union[Token, str]
-    ) -> None:
+    async def switch_account(self, new_account_token: t.Union[Token, str]) -> None:
         try:
             if isinstance(new_account_token, Token):
                 self.mail_client._client.headers.update(
@@ -175,9 +169,7 @@ class MailServer(MailServerBase):
             )
 
         except Exception as e:
-            self.log(
-                message="Could not switch account: " + str(e), severity="ERROR"
-            )
+            self.log(message="Could not switch account: " + str(e), severity="ERROR")
 
     async def delete_account(self, account_id: str) -> None:
         try:
@@ -191,9 +183,7 @@ class MailServer(MailServerBase):
                 )
             )
         except Exception as e:
-            self.log(
-                message="Could not delete account: " + str(e), severity="ERROR"
-            )
+            self.log(message="Could not delete account: " + str(e), severity="ERROR")
 
     async def shutdown(self) -> None:
         self.collector.clean_cache()

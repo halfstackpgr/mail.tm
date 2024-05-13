@@ -88,9 +88,7 @@ class SyncMail:
         return urllib.parse.urljoin(self._base_url, other_literal)
 
     def get_me(self) -> t.Optional[Account]:
-        resp = self._interact(
-            method="GET", url=self._create_url(AccountMethods.GET_ME)
-        )
+        resp = self._interact(method="GET", url=self._create_url(AccountMethods.GET_ME))
         if resp is not None:
             return msgspec.json.decode(resp, type=Account, strict=False)
         else:
@@ -108,9 +106,7 @@ class SyncMail:
     def get_domain(self, domain_id: str) -> t.Optional[Domain]:
         resp = self._interact(
             method="GET",
-            url=self._create_url(
-                DomainMethods.GET_DOMAIN_BY_ID.format(id=domain_id)
-            ),
+            url=self._create_url(DomainMethods.GET_DOMAIN_BY_ID.format(id=domain_id)),
         )
         if resp is not None:
             return msgspec.json.decode(resp, type=Domain, strict=False)
@@ -130,9 +126,7 @@ class SyncMail:
         else:
             return None
 
-    def create_account(
-        self, address: str, password: str
-    ) -> t.Optional[Account]:
+    def create_account(self, address: str, password: str) -> t.Optional[Account]:
         body = {"address": f"{address}", "password": f"{password}"}
         resp = self._interact(
             method="POST",
@@ -162,9 +156,7 @@ class SyncMail:
                 ),
             )
         else:
-            raise AccountTokenInvalid(
-                "You need an account token to delete an account!"
-            )
+            raise AccountTokenInvalid("You need an account token to delete an account!")
 
     def get_messages(self, page: int = 1) -> t.Optional[MessagePageView]:
         params = {"page": f"{page}"}
@@ -174,9 +166,7 @@ class SyncMail:
             params=params,
         )
         if resp is not None:
-            return msgspec.json.decode(
-                resp, type=MessagePageView, strict=False
-            )
+            return msgspec.json.decode(resp, type=MessagePageView, strict=False)
         else:
             return None
 
@@ -218,9 +208,7 @@ class SyncMail:
         params = {"id": f"{source_id}"}
         resp = self._interact(
             method="GET",
-            url=self._create_url(
-                MessageMethods.GET_SOURCES_BY_ID.format(id=source_id)
-            ),
+            url=self._create_url(MessageMethods.GET_SOURCES_BY_ID.format(id=source_id)),
             params=params,
         )
         if resp is not None:

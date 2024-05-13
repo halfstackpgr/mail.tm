@@ -1,6 +1,5 @@
 site_name: "Mail.tm SDK"
 repo_url: https://github.com/halfstackpgr/Mail.tm
-edit_uri: edit/main/docs/
 theme:
   name: material
   font:
@@ -57,11 +56,14 @@ theme:
 
 
 nav:
-    - Home: index.md
-    - Client:
-        - Ideal Client: client/index.md
-        - Server: client/server.md
-        - Limitations: client/limitations.md
+    - Home:
+      - Client Introduction: docs/home/index.md
+      - Client System: docs/home/client.md
+      - Future Plans: docs/home/future.md
+    - Server System:
+        - Server Introduction: docs/server/server.md
+        - Server Events: docs/server/events.md
+        - Server Limitations: docs/server/limitations.md
 
 
 markdown_extensions:
@@ -95,3 +97,34 @@ markdown_extensions:
 plugins:
   - search
   - privacy
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          import:
+            - https://docs.python.org/3.10/objects.inv
+            - https://docs.hikari-py.dev/en/latest/objects.inv
+            - https://tanjun.cursed.solutions/objects.inv
+            - https://alluka.cursed.solutions/objects.inv
+            - https://arc.hypergonial.com/objects.inv
+          options:
+            heading_level: 3
+            annotations_path: source
+            members_order: source
+            group_by_category: true
+            docstring_section_style: spacy
+            docstring_style: numpy
+            inherited_members: true
+            merge_init_into_class: true
+            separate_signature: true
+            show_signature_annotations: true
+            show_source: false
+            show_submodules: false
+            signature_crossrefs: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            extensions:
+                - griffe_inherited_docstrings
+            filters:
+              - "!^_"
+              - "!^__init_subclass__"

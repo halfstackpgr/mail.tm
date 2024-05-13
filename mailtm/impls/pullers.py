@@ -77,15 +77,11 @@ class get:
         else:
             raise ValueError(f"Unknown Error\n TB:\n{resp.text}")
 
-    def create_account(
-        self, address: str, password: str
-    ) -> t.Optional[Account]:
+    def create_account(self, address: str, password: str) -> t.Optional[Account]:
         body = {"address": f"{address}", "password": f"{password}"}
         resp = self._interact(
             method="POST",
-            url=urllib.parse.urljoin(
-                self._base_url, AccountMethods.CREATE_ACCOUNT
-            ),
+            url=urllib.parse.urljoin(self._base_url, AccountMethods.CREATE_ACCOUNT),
             body=body,
         )
         if resp is not None:
@@ -129,9 +125,7 @@ class get:
         }
         resp = self._interact(
             method="POST",
-            url=urllib.parse.urljoin(
-                self._base_url, AccountMethods.GET_ACCOUNT_TOKEN
-            ),
+            url=urllib.parse.urljoin(self._base_url, AccountMethods.GET_ACCOUNT_TOKEN),
             body=body,
         )
         if resp is not None:
@@ -155,9 +149,7 @@ class get:
     def get_domains(self) -> t.Optional[DomainPageView]:
         resp = self._interact(
             method="GET",
-            url=urllib.parse.urljoin(
-                self._base_url, DomainMethods.GET_ALL_DOMAINS
-            ),
+            url=urllib.parse.urljoin(self._base_url, DomainMethods.GET_ALL_DOMAINS),
         )
         if resp is not None:
             return msgspec.json.decode(resp, type=DomainPageView, strict=False)
@@ -183,9 +175,7 @@ class xget:
         if method not in ["GET", "POST", "DELETE", "PATCH"]:
             raise ValueError("Invalid HTTP method")
         try:
-            async with aiohttp.request(
-                method, url, params=params, json=body
-            ) as resp:
+            async with aiohttp.request(method, url, params=params, json=body) as resp:
                 result = resp
                 if result.status == 200:
                     return await result.read()
@@ -226,15 +216,11 @@ class xget:
             print(f"{str(e)}")
             return None
 
-    async def create_account(
-        self, address: str, password: str
-    ) -> t.Optional[Account]:
+    async def create_account(self, address: str, password: str) -> t.Optional[Account]:
         body = {"address": f"{address}", "password": f"{password}"}
         resp = await self._interact(
             method="POST",
-            url=urllib.parse.urljoin(
-                self._base_url, AccountMethods.CREATE_ACCOUNT
-            ),
+            url=urllib.parse.urljoin(self._base_url, AccountMethods.CREATE_ACCOUNT),
             body=body,
         )
         if resp is not None:
@@ -275,9 +261,7 @@ class xget:
         }
         resp = await self._interact(
             method="POST",
-            url=urllib.parse.urljoin(
-                self._base_url, AccountMethods.GET_ACCOUNT_TOKEN
-            ),
+            url=urllib.parse.urljoin(self._base_url, AccountMethods.GET_ACCOUNT_TOKEN),
             body=body,
         )
         if resp is not None:
@@ -301,9 +285,7 @@ class xget:
     async def get_domains(self) -> t.Optional[DomainPageView]:
         resp = await self._interact(
             method="GET",
-            url=urllib.parse.urljoin(
-                self._base_url, DomainMethods.GET_ALL_DOMAINS
-            ),
+            url=urllib.parse.urljoin(self._base_url, DomainMethods.GET_ALL_DOMAINS),
         )
         if resp is not None:
             return msgspec.json.decode(resp, type=DomainPageView, strict=False)

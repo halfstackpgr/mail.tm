@@ -102,9 +102,7 @@ class AsyncMail:
     async def get_domains(self) -> t.Optional[DomainPageView]:
         resp = await self._interact(
             method="GET",
-            url=urllib.parse.urljoin(
-                self._base_url, DomainMethods.GET_ALL_DOMAINS
-            ),
+            url=urllib.parse.urljoin(self._base_url, DomainMethods.GET_ALL_DOMAINS),
         )
         if resp is not None:
             return msgspec.json.decode(resp, type=DomainPageView, strict=False)
@@ -138,15 +136,11 @@ class AsyncMail:
         else:
             return None
 
-    async def create_account(
-        self, address: str, password: str
-    ) -> t.Optional[Account]:
+    async def create_account(self, address: str, password: str) -> t.Optional[Account]:
         body = {"address": f"{address}", "password": f"{password}"}
         resp = await self._interact(
             method="POST",
-            url=urllib.parse.urljoin(
-                self._base_url, AccountMethods.CREATE_ACCOUNT
-            ),
+            url=urllib.parse.urljoin(self._base_url, AccountMethods.CREATE_ACCOUNT),
             body=body,
         )
         if resp is not None:
@@ -174,23 +168,17 @@ class AsyncMail:
                 ),
             )
         else:
-            raise AccountTokenInvalid(
-                "You need an account token to delete an account!"
-            )
+            raise AccountTokenInvalid("You need an account token to delete an account!")
 
     async def get_messages(self, page: int = 1) -> t.Optional[MessagePageView]:
         params = {"page": f"{page}"}
         resp = await self._interact(
             method="GET",
-            url=urllib.parse.urljoin(
-                self._base_url, MessageMethods.GET_ALL_MESSAGES
-            ),
+            url=urllib.parse.urljoin(self._base_url, MessageMethods.GET_ALL_MESSAGES),
             params=params,
         )
         if resp is not None:
-            return msgspec.json.decode(
-                resp, type=MessagePageView, strict=False
-            )
+            return msgspec.json.decode(resp, type=MessagePageView, strict=False)
         else:
             return None
 
