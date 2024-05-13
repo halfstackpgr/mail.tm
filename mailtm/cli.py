@@ -3,10 +3,13 @@ import datetime
 
 
 def version() -> None:
+    """
+    Version information and general banner for Mail.TM.
+    """
     with open("mailtm/server/assets/banner.txt", "r", encoding="utf-8") as f:
         text = f.read()
         details = text.format(
-            time=datetime.datetime.now(),
+            time=datetime.datetime.now().time().strftime("%H:%M:%S"),
             date=f"{datetime.date.today()}",
             mail=Fore.CYAN,
             reset=Fore.RESET,
@@ -20,3 +23,5 @@ def version() -> None:
         )
 
         print(details)
+
+version()
