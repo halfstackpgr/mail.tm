@@ -155,14 +155,8 @@ class InternalCache:
         Returns:
             None
         """
-        if isinstance(item, Message):
+        if isinstance(item, (Message, Account, Domain)):
             self.internal_memory_map[cache_type].append(item)  # type: ignore
-        elif isinstance(item, Account):
-            self.internal_memory_map[cache_type].append(item)  # type: ignore
-        elif isinstance(item, Domain):
-            self.internal_memory_map[cache_type].append(item)  # type: ignore
-        else:
-            pass
 
     def get_cache_size(self) -> int:
         """
