@@ -24,13 +24,52 @@ ServerSideEvents = t.TypeVar("ServerSideEvents", bound=BaseEvent)
 
 class MailServerBase:
     """
-    Base Implementation of a Mail Server.
-    ---
-    This class provides a basic implementation for a mail server, including internal handlers and dispatchers.
-    It is meant to be subclassed into the main usable server, and is not intended for basic usage provided by
-    the library.
-    """
+    Stellar Addition - Custom MailServer.
 
+    This script sets up a [**pooling-based**](https://docs.python.org/3/library/multiprocessing.html) server
+    that checks the API every second for new events. When a difference is detected, the corresponding event
+    is dispatched, allowing you to respond dynamically to incoming messages.
+    In addition to the core SDK functionalities, this package offers an additional layer of scripts designed
+    to handle clients in an event-driven manner, reminiscent of frameworks like `discord.py` or `hikari`. With
+    this SDK, you gain access to a client that dispatches events seamlessly.
+    
+    Parameters
+    ----------
+    server_auth : ServerAuth
+        The server authentication details.
+    pooling_rate : Optional[int]
+        The pooling rate in seconds. If not provided, the default pooling rate will be used.
+    banner : Optional[bool]
+        Whether to display a banner upon initialization. Defaults to True.
+    banner_path : Optional[Union[Path, str]]
+        The path to the banner file. Defaults to the default banner file.
+    suppress_errors : Optional[bool]
+        Whether to suppress errors. Defaults to False.
+    enable_logging : Optional[bool]
+        Whether to enable logging. Defaults to False.
+        
+    Example
+    -------
+    ```python
+    import mailtm
+    server = mailtm.MailServer(
+        server_auth=ServerAuth(
+            account_id="...",  # Your account ID.
+            account_token="...",  # Your account token.
+        )
+    )
+    # Define an event handler for new messages
+    # The stand-alone decorators should be used
+    # without the brackets since we provide no
+    # function to handle, and append with the
+    # handler.
+    @server.on_new_message
+    async def event(event: NewMessage):
+        print(event.new_message.text)
+    # Start the event loop
+    server.run()
+    ```
+    """
     def __init__(
         self,
         server_auth: ServerAuth,
@@ -40,21 +79,6 @@ class MailServerBase:
         suppress_errors: t.Optional[bool] = False,
         enable_logging: t.Optional[bool] = False,
     ) -> None:
-        """
-        Initializes a new instance of the `MailServerBase` class.
-
-        Args:
-            server_auth (ServerAuth): An instance of the `ServerAuth` class containing the server authentication details.
-            pooling_rate (Optional[int]): The rate at which the server should pool for new messages.
-            banner (Optional[bool], optional): Whether to display a banner upon initialization. Defaults to True.
-            banner_path (Optional[Union[Path, str]], optional): The path to the banner file. Defaults to the default banner file.
-            suppress_errors (Optional[bool], optional): Whether to suppress errors. Defaults to False.
-            enable_logging (Optional[bool], optional): Whether to enable logging. Defaults to False.
-            save_output (Optional[bool], optional): Whether to save output. Defaults to False.
-
-        Returns:
-            None
-        """
         self._banner_enabled = banner
         self._banner_path = banner_path
         self._pooling_rate = pooling_rate
@@ -75,11 +99,31 @@ class MailServerBase:
         )
         self.collector = InternalCache()
 
+    def _extracted_from_on_new_domain_4(self, arg0, func):
+        if arg0 not in self.handlers:
+            self.handlers[arg0] = []
+        self.handlers[arg0].append(func)
+        return func
+
     def log(
         self,
         message: str,
         severity: t.Literal["INFO", "WARNING", "ERROR"] = "INFO",
     ) -> None:
+        """
+        Logs the message to the console with the corresponding severity.
+        
+        Parameters
+        ----------
+        message : str
+            The message to log.
+        severity : Literal["INFO", "WARNING", "ERROR"]
+            The severity of the message. Defaults to INFO.
+        
+        Returns
+        -------
+        None
+        """
         if self._logging_enabled is True:
             current_time = datetime.datetime.now().strftime("%a %m/%d/%Y at %I:%M%p")
             if severity == "INFO":
@@ -112,12 +156,24 @@ class MailServerBase:
     ]:
         """
         Decorator to subscribe a function to handle server events.
-
-        Args:
-            event_type (Type[BaseEvent]): The type of event to subscribe to.
-
-        Returns:
-            Callable: The decorated function.
+        
+        Parameters
+        ----------
+        event_type : Type[BaseEvent]
+            The type of event to subscribe to.
+        
+        Returns
+        -------
+        Callable
+            The decorated function.
+        
+        Example
+        -------
+        ```python
+        @server.subscribe(ServerSideEvents.NewMessage)
+        async def event(event: ServerSideEvents.NewMessage):
+            print(event.new_message.text)
+        ```
         """
 
         def decorator(
@@ -133,25 +189,35 @@ class MailServerBase:
     def on_new_message(self, func: t.Callable[[NewMessage], t.Awaitable[None]]):
         """
         Registers a callback function to handle new messages.
-
-        Args:
-            func (Callable[[NewMessage], Awaitable[None]]): The callback function to handle new messages.
-
-        Returns:
-            The result of the extracted function call.
+        
+        Parameters
+        ----------
+        func : Callable[[NewMessage], Awaitable[None]]
+            The callback function to handle new messages.
+        
+        Returns
+        -------
+        The result of the extracted function call.
         """
 
         return self._extracted_from_on_new_domain_4(NewMessage, func)
 
     def on_new_domain(self, func: t.Callable[[DomainChange], t.Awaitable[None]]):
+        """
+        Registers a callback function to handle new domains.
+        
+        Parameters
+        ----------
+        func : Callable[[DomainChange], Awaitable[None]]
+            The callback function to handle new domains.
+        
+        Returns
+        -------
+        The result of the extracted function call.
+        """
         return self._extracted_from_on_new_domain_4(DomainChange, func)
 
-    # TODO Rename this here and in `on_new_message` and `on_new_domain`
-    def _extracted_from_on_new_domain_4(self, arg0, func):
-        if arg0 not in self.handlers:
-            self.handlers[arg0] = []
-        self.handlers[arg0].append(func)
-        return func
+
 
     async def dispatch(self, event: BaseEvent) -> None:
         """
@@ -169,11 +235,8 @@ class MailServerBase:
 
     async def _check_for_new_messages(self) -> None:
         """
-        Asynchronously checks for new messages by retrieving message information from the mail client.
+        Checks for new messages by retrieving message information from the mail client.
         If new messages are detected, triggers a NewMessage event with the new message details.
-
-        Returns:
-            None
         """
         msg_view = await self.mail_client.get_messages()
         if (
@@ -204,9 +267,6 @@ class MailServerBase:
         """
         Asynchronously checks for a new domain by retrieving domain information from the mail client.
         If a new domain is detected, triggers a DomainChange event with the new domain details.
-
-        Returns:
-            t.Optional[Domain]: The newly detected domain, if any.
         """
         domain_view = await self.mail_client.get_domains()
         if (
@@ -237,6 +297,12 @@ class MailServerBase:
             )
 
     async def shutdown(self) -> None:
+        """
+        Calls the shutdown method on the MailClient instance and dispatches the ServerCalledOff event.
+
+        Returns:
+            None
+        """
         await self.mail_client.close()
         await self.dispatch(
             ServerCalledOff(
@@ -289,18 +355,12 @@ class MailServerBase:
 
     async def runner(self) -> None:
         """
-        Asynchronously runs the server logic.
-
         This function is responsible for executing the main server logic. It starts a session and continuously polls the API for new events. When a difference is detected, the corresponding event is dispatched. The function runs in an infinite loop until it is interrupted by a keyboard interrupt.
 
-        Parameters:
-            None
-
-        Returns:
-            None
-
-        Raises:
-            Exception: If no events have been subscribed to.
+        Raises
+        ------
+            Exception
+                If no events have been subscribed to.
         """
         if self._banner_enabled is True:
             await self._banner()

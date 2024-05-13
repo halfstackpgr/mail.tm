@@ -17,42 +17,6 @@ from ..impls.pullers import xget
 
 
 class MailServer(MailServerBase):
-    """
-    Stellar Addition - Custom MailServer.
-    ---
-    This script sets up a [**pooling-based**](https://docs.python.org/3/library/multiprocessing.html) server
-    that checks the API every second for new events. When a difference is detected, the corresponding event
-    is dispatched, allowing you to respond dynamically to incoming messages.
-    In addition to the core SDK functionalities, this package offers an additional layer of scripts designed
-    to handle clients in an event-driven manner, reminiscent of frameworks like `discord.py` or `hikari`. With
-    this SDK, you gain access to a client that dispatches events seamlessly.
-
-    Here's a sample usage scenario:
-
-    ```python
-    server = MailServer(
-        server_auth=ServerAuth(
-            account_id="...",  # Your account ID.
-            account_token="...",  # Your account token.
-        )
-    )
-    # Define an event handler for new messages
-    # The stand-alone decorators should be used
-    # without the brackets since we provide no
-    # function to handle, and append with the
-    # handler.
-    @server.on_new_message
-    async def event(event: NewMessage):
-        print(event.new_message.text)
-    # Start the event loop
-    server.run()
-    ```
-    This would initiate the event-runner which would start to pool, and a server is then initiated.
-
-    """
-
-    ...
-
     def __init__(
         self,
         server_auth: ServerAuth,
@@ -78,16 +42,17 @@ class MailServer(MailServerBase):
         """
         Creates a new account with the given email address and password.
 
-        Args:
-            account_address (str): The email address of the new account.
-            account_password (str): The password for the new account.
+        Parameters
+        ----------
+        account_address : str
+            The email address of the new account.
+        account_password: str
+            The password for the new account.
 
-        Returns:
-            Optional[Account]: The newly created account object if successful, None otherwise.
-
-        Raises:
-            Exception: If there is an error creating the account.
-
+        Returns
+        -------
+        Optional[Account]
+            The newly created account object if successful, None otherwise.
         """
         try:
             new_account = await self.mail_client.create_account(
@@ -119,6 +84,18 @@ class MailServer(MailServerBase):
             return None
 
     async def delete_message(self, message_id: str) -> None:
+        """
+        Deletes a message from the Mail Box.
+
+        Parameters
+        ----------
+        message_id : str
+            The ID of the message to be deleted.
+
+        Returns
+        -------
+            None
+        """
         message = await self.mail_client.get_message(message_id=message_id)
         if message:
             try:
@@ -142,6 +119,18 @@ class MailServer(MailServerBase):
                 return None
 
     async def switch_account(self, new_account_token: t.Union[Token, str]) -> None:
+        """
+        Switches to a new account.
+
+        Parameters
+        ----------
+        new_account_token : t.Union[Token, str]
+            The new account token to switch to.
+
+        Returns
+        -------
+            None
+        """
         try:
             if isinstance(new_account_token, Token):
                 self.mail_client._client.headers.update(
@@ -172,6 +161,18 @@ class MailServer(MailServerBase):
             self.log(message="Could not switch account: " + str(e), severity="ERROR")
 
     async def delete_account(self, account_id: str) -> None:
+        """
+        Deletes an account.
+
+        Parameters
+        ----------
+        account_id : str
+            The ID of the account to be deleted.
+
+        Returns
+        -------
+            None
+        """
         try:
             await self.mail_client.delete_account(account_id)
             self.log(message="Deleted account with ID: " + account_id)

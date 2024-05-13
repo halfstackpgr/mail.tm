@@ -265,6 +265,14 @@ class AccountSwitched(BaseEvent):
 class NewAccountCreated(BaseEvent):
     """
     Event triggered when a new account is created.
+
+    Parameters
+    ----------
+    new_account_auth: ServerAuth
+        An instance of ServerAuth that represents the new account.
+
+    new_account: Account
+        An instance of Account that represents the new account.
     """
 
     def __init__(
@@ -275,18 +283,81 @@ class NewAccountCreated(BaseEvent):
         client: AsyncMail,
         _server: AttachServer,
     ) -> None:
-        self.new_account_aut = new_account_auth
-        self.new_account = new_account
+        self._new_account_aut = new_account_auth
+        self._new_account = new_account
         super().__init__(event, client, _server)
+
+    @property
+    def new_account_auth(self) -> ServerAuth:
+        """
+        The server authentication related to the new account.
+
+        Returns
+        -------
+        ServerAuth:
+            An instance representing the details used in server authentication.
+        """
+        return self._new_account_aut
+
+    @property
+    def new_account(self) -> Account:
+        """
+        The new account that was created.
+
+        Returns
+        -------
+        Account
+            An instance of Account that represents the new account.
+        """
+        return self._new_account
 
 
 class AccountDeleted(BaseEvent):
     """
     Event triggered when an account is deleted.
+
+    Parameters
+    ----------
+    deleted_account_auth: ServerAuth
+        An instance of ServerAuth that represents the deleted account.
+
+    deleted_account: Account
+        An instance of Account that represents the deleted account.
     """
 
-    deleted_account_auth: ServerAuth
-    deleted_account: Account
+    def __init__(
+        self,
+        event: str,
+        client: AsyncMail,
+        _server: AttachServer,
+        deleted_account_auth: ServerAuth,
+        deleted_account: Account,
+    ) -> None:
+        super().__init__(event, client, _server)
+
+    @property
+    def deleted_account_auth(self) -> ServerAuth:
+        """
+        The server authentication related to the deleted account.
+
+        Returns
+        -------
+        ServerAuth:
+            An instance representing the details used in server authentication.
+        """
+        return self.deleted_account_auth
+
+    @property
+    def deleted_account(self) -> Account:
+        """
+        The account that was deleted.
+
+        Returns
+        -------
+        Account
+            An instance of Account that represents the deleted account.
+        """
+        return self.deleted_account
 
 
 class ServerStarted(BaseEvent):

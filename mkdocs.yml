@@ -56,15 +56,15 @@ theme:
 
 
 nav:
-    - Home:
-      - Client Introduction: docs/home/index.md
-      - Client System: docs/home/client.md
-      - Future Plans: docs/home/future.md
-    - Server System:
-        - Server Introduction: docs/server/server.md
-        - Server Events: docs/server/events.md
-        - Server Limitations: docs/server/limitations.md
-
+  - Home: index.md
+  - Client System:
+    - Client System: home/client.md
+    - Future Plans: home/future.md
+  - Server System:
+      - Server Introduction: server/server.md
+      - Server Implementation: server/implementation.md
+      - Server Events: server/events.md
+      - Server Limitations: server/limitations.md
 
 markdown_extensions:
   - admonition
