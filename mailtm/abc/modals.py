@@ -16,6 +16,7 @@ class Domain(msgspec.Struct):
     """
     The domain of the email account.
     """
+
     _id: t.Optional[str] = msgspec.field(name="@id", default=None)
     """
     `Secrative`: ID of the interaction.

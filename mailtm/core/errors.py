@@ -21,7 +21,7 @@ class AccountTokenInvalid(Exception):
 class EntityNotFound(Exception):
     """
     Not found 404
-    
+
     You're trying to access an account that doesn't exist? Or maybe reading a non-existing message? Go check that!
     """
 
@@ -61,7 +61,7 @@ class EntityNotProcessable(Exception):
 class RatelimitError(Exception):
     """
     Too many requests 429
-    
+
     You exceeded the limit of 8 requests per second! Try delaying the request by one second!
     """
 

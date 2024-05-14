@@ -282,6 +282,7 @@ class ViewSearch(msgspec.Struct):
     """
     A view search system.
     """
+
     _type: str = msgspec.field(name="@type")
     """
     The type of the view.

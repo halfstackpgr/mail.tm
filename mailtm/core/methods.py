@@ -11,7 +11,7 @@ __all__ = [
     "AccountMethods",
     "MessageMethods",
     "ServerAuth",
-    "AttachServer"
+    "AttachServer",
 ]
 
 from dataclasses import dataclass
@@ -126,4 +126,5 @@ class AttachServer:
     """
     This contains an internal server instance to perform methods inherited from the server.
     """
+
     server: MailServerBase
