@@ -1,11 +1,13 @@
-site_name: "Mail.tm SDK"
+site_name: "Mail SDK"
 repo_url: https://github.com/halfstackpgr/Mail.tm
 theme:
+  favicon: assets/logo.png
+  logo: assets/site-logo.png
   name: material
   font:
     code: JetBrains Mono
   icon:
-    logo: fontawesome/solid/book
+    logo: logo.png
     repo: fontawesome/brands/github
     edit: material/pencil
     view: material/eye
@@ -25,13 +27,13 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
+      primary: green
       toggle:
         icon: octicons/sun-16
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
+      primary: black
       toggle:
         icon: octicons/moon-24
         name: Switch to light mode

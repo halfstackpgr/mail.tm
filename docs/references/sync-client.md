@@ -1,3 +1,3 @@
-# Synchronous Mail Client implementation.
+# ⚡Synchronous Mail Client implementation.
 
 ::: mailtm.impls.client

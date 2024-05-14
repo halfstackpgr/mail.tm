@@ -9,6 +9,10 @@ This kit streamlines interactions with Mail.tm's API, empowering you to seamless
 integrate its features into your applications. Whether you're automating email
 workflows or incorporating temporary email capabilities, this SDK has you covered.
 
+<div align="Center">
+<img src="assets/server-image.png">
+</div>
+
 - The library provides a way to reduce the memory load. 
 - It uses hashmaps for caching the data required to compare and dispatch data related events. 
 - The live system works on a routed method of pooling with API which makes it easy to interact with client.
