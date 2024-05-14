@@ -9,10 +9,8 @@
     <img src="https://img.shields.io/badge/python-Strict-checking?style=plastic&logo=python&label=Type-Checking&labelColor=yellow" alt="Static Badge">
 </div>
 
->[!CAUTION]
-> This library is still under development.
-> Can be installed though bugs might still exist.
-> It might crash everything. 
+>[!INFO]
+> Without the documentation it is almost worthless to even start to operate with the library, kindly refer to the [**documentation**](https://halfstackpgr.github.io/Mail.tm/).
 
 ## Introduction
 
