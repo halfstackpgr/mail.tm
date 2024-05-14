@@ -1,9 +1,18 @@
 """
 This module contains classes representing different methods available in the Mail.tm webservice.
 Each class represents a set of related methods.
+The classes are used to construct method calls to the API of Mail.tm and make requests to their server.
 """
 
 from __future__ import annotations
+
+__all__ = [
+    "DomainMethods",
+    "AccountMethods",
+    "MessageMethods",
+    "ServerAuth",
+    "AttachServer"
+]
 
 from dataclasses import dataclass
 import typing as t
@@ -114,4 +123,7 @@ class ServerAuth:
 
 @dataclass
 class AttachServer:
+    """
+    This contains an internal server instance to perform methods inherited from the server.
+    """
     server: MailServerBase
