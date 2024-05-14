@@ -9,7 +9,7 @@
     <img src="https://img.shields.io/badge/python-Strict-checking?style=plastic&logo=python&label=Type-Checking&labelColor=yellow" alt="Static Badge">
 </div>
 
->[!INFO]
+> [!TIP]
 > Without the documentation it is almost worthless to even start to operate with the library, kindly refer to the [**documentation**](https://halfstackpgr.github.io/Mail.tm/).
 
 ## Introduction
