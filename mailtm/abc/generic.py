@@ -3,6 +3,10 @@ import typing as t
 
 
 class MessageFrom(msgspec.Struct):
+    """
+    Represents a data class containing details of messages.
+    """
+
     name: str = msgspec.field(name="name")
     """
     Name of the `Account` by which the `Message` was sent.

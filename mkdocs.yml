@@ -65,6 +65,16 @@ nav:
       - Server Implementation: server/implementation.md
       - Server Events: server/events.md
       - Server Limitations: server/limitations.md
+      - References: server/references.md
+  - Async Client: references/async-client.md
+  - Sync Server: references\sync-client.md
+  - Pullers: references/pullers.md
+  - ABCs and Errors:
+    - ABC: references/abc.md
+    - Errors: references/errors.md
+    - Methods: references/methods.md
+
+
 
 markdown_extensions:
   - admonition

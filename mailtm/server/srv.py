@@ -32,7 +32,7 @@ class MailServerBase:
     In addition to the core SDK functionalities, this package offers an additional layer of scripts designed
     to handle clients in an event-driven manner, reminiscent of frameworks like `discord.py` or `hikari`. With
     this SDK, you gain access to a client that dispatches events seamlessly.
-    
+
     Parameters
     ----------
     server_auth : ServerAuth
@@ -47,7 +47,7 @@ class MailServerBase:
         Whether to suppress errors. Defaults to False.
     enable_logging : Optional[bool]
         Whether to enable logging. Defaults to False.
-        
+
     Example
     -------
     ```python
@@ -70,6 +70,7 @@ class MailServerBase:
     server.run()
     ```
     """
+
     def __init__(
         self,
         server_auth: ServerAuth,
@@ -112,14 +113,14 @@ class MailServerBase:
     ) -> None:
         """
         Logs the message to the console with the corresponding severity.
-        
+
         Parameters
         ----------
         message : str
             The message to log.
         severity : Literal["INFO", "WARNING", "ERROR"]
             The severity of the message. Defaults to INFO.
-        
+
         Returns
         -------
         None
@@ -156,17 +157,17 @@ class MailServerBase:
     ]:
         """
         Decorator to subscribe a function to handle server events.
-        
+
         Parameters
         ----------
         event_type : Type[BaseEvent]
             The type of event to subscribe to.
-        
+
         Returns
         -------
         Callable
             The decorated function.
-        
+
         Example
         -------
         ```python
@@ -189,12 +190,12 @@ class MailServerBase:
     def on_new_message(self, func: t.Callable[[NewMessage], t.Awaitable[None]]):
         """
         Registers a callback function to handle new messages.
-        
+
         Parameters
         ----------
         func : Callable[[NewMessage], Awaitable[None]]
             The callback function to handle new messages.
-        
+
         Returns
         -------
         The result of the extracted function call.
@@ -205,19 +206,17 @@ class MailServerBase:
     def on_new_domain(self, func: t.Callable[[DomainChange], t.Awaitable[None]]):
         """
         Registers a callback function to handle new domains.
-        
+
         Parameters
         ----------
         func : Callable[[DomainChange], Awaitable[None]]
             The callback function to handle new domains.
-        
+
         Returns
         -------
         The result of the extracted function call.
         """
         return self._extracted_from_on_new_domain_4(DomainChange, func)
-
-
 
     async def dispatch(self, event: BaseEvent) -> None:
         """

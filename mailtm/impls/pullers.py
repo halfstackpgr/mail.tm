@@ -1,3 +1,30 @@
+"""
+This module contains all the classes and functions that make HTTP requests to the Mail.TM API (client- less).
+It is divided into two main classes: 
+
+- get 
+    which is a synchronous class
+- xget
+    which is an asynchronous class.
+
+Each class has methods that correspond to the API endpoints.
+
+- These methods will take the necessary parameters and make a request to the corresponding endpoint.
+- The methods will return the response of the API in the form of a type hinteded object. 
+- If the method returns `None`, it means that the request failed and the error is not explicitly handled by the method.
+
+The methods of `xget` return `None` and the error is handled by the method itself, so you don't need to handle it.
+
+All the methods in this module make requests to the API.
+
+The methods in this module are also documented here.
+"""
+
+from __future__ import annotations
+
+__all__ = ["get", "xget"]
+
+
 import requests
 import aiohttp
 import msgspec
@@ -19,7 +46,13 @@ from ..core.errors import (
 
 class get:
     """
-    `Synchronous` : Out-of-client methods  to get, post, delete, and patch data through aiohttp.
+    A synchronous implementation which handles data client-less (without making a session).
+
+    Synchronous
+    -----------
+    Gets an out-of-client class that helps to fetch data regardless of account token.
+    But this won't include all the data that is available in the API. It only pulls the
+    data that is avilable without authentication using headers.
     """
 
     def __init__(self) -> None:
@@ -32,6 +65,25 @@ class get:
         body: t.Optional[t.Any] = None,
         params: t.Optional[t.Dict[str, str]] = None,
     ) -> t.Optional[bytes]:
+        """
+        Interact with the API using methods, and API slug.
+
+        Parameters
+        ----------
+        method: Literal["GET", "POST", "DELETE", "PATCH"]
+            The method to use to interact with the API.
+        url: str
+            The API slug to interact with.
+        body: Optional[Any]
+            The body of the request.
+        params: Optional[Dict[str, str]]
+            The query parameters of the request.
+
+        Returns
+        -------
+        Optional[bytes]
+            The response from the API.
+        """
         if method not in ["GET", "POST", "DELETE", "PATCH"]:
             raise ValueError("Invalid HTTP method")
 
@@ -78,6 +130,21 @@ class get:
             raise ValueError(f"Unknown Error\n TB:\n{resp.text}")
 
     def create_account(self, address: str, password: str) -> t.Optional[Account]:
+        """
+        Creates an account.
+
+        Parameters
+        ----------
+        address: str
+            The email address of the new account.
+        password: str
+            The password for the new account.
+
+        Returns
+        -------
+        Optional[Account]
+            The newly created account object if successful, None otherwise.
+        """
         body = {"address": f"{address}", "password": f"{password}"}
         resp = self._interact(
             method="POST",
@@ -90,6 +157,19 @@ class get:
             return None
 
     def get_account(self, account_id: str) -> t.Optional[Account]:
+        """
+        Gets an account using ID.
+
+        Parameters
+        ----------
+        account_id: str
+            The ID of the account to get.
+
+        Returns
+        -------
+        Optional[Account]
+            The account object if successful, None otherwise.
+        """
         resp = self._interact(
             method="POST",
             url=urllib.parse.urljoin(
@@ -104,6 +184,19 @@ class get:
             return None
 
     def delete_account(self, account_id: str) -> bool:
+        """
+        Deletes an account using ID.
+
+        Parameters
+        ----------
+        account_id: str
+            The ID of the account to delete.
+
+        Returns
+        -------
+        bool
+            True if successful, False otherwise.
+        """
         resp = requests.delete(
             url=urllib.parse.urljoin(
                 self._base_url,
@@ -111,14 +204,26 @@ class get:
             ),
             params={"id": f"{account_id}"},
         )
-        if resp.status_code == 204:
-            return True
-        else:
-            return False
+        return resp.status_code == 204
 
     def get_account_token(
         self, account_address: str, account_password: str
     ) -> t.Optional[Token]:
+        """
+        Get an account token which is used by the clients.
+
+        Parameters
+        ----------
+        account_address: str
+            The email address of the account.
+        account_password: str
+            The password of the account.
+
+        Returns
+        -------
+        Optional[Token]
+            The account token if successful, None otherwise.
+        """
         body = {
             "address": f"{account_address}",
             "password": f"{account_password}",
@@ -134,6 +239,19 @@ class get:
             return None
 
     def get_domain(self, domain_id: str) -> t.Optional[Domain]:
+        """
+        Get a specific domain with ID.
+
+        Parameters
+        ----------
+        domain_id: str
+            The ID of the domain to get.
+
+        Returns
+        -------
+        Optional[Domain]
+            The domain with the ID provided. If not found, returns None.
+        """
         resp = self._interact(
             method="GET",
             url=urllib.parse.urljoin(
@@ -147,6 +265,14 @@ class get:
             return None
 
     def get_domains(self) -> t.Optional[DomainPageView]:
+        """
+        Get all domains.
+
+        Returns
+        -------
+        Optional[DomainPageView]
+            The domain page view if successful, None otherwise.
+        """
         resp = self._interact(
             method="GET",
             url=urllib.parse.urljoin(self._base_url, DomainMethods.GET_ALL_DOMAINS),
@@ -159,7 +285,13 @@ class get:
 
 class xget:
     """
-    `Asynchronous` : Out-of-client methods  to get, post, delete, and patch data through aiohttp.
+    An asynchronous implementation which handles data client-less (without making a session).
+
+    Asynchronous
+    ------------
+    Gets an out-of-client class that helps to fetch data regardless of account token.
+    But this won't include all the data that is available in the API. It only pulls the
+    data that is avilable without authentication using headers.
     """
 
     def __init__(self) -> None:
@@ -209,14 +341,28 @@ class xget:
                     )
                 else:
                     raise ValueError(
-                        f"Unknown Error\nPayload: {(await resp.read()).decode()}"
+                        f"Unknown Error\nPayload: {(await result.read()).decode()}"
                     )
-
         except Exception as e:
             print(f"{str(e)}")
             return None
 
     async def create_account(self, address: str, password: str) -> t.Optional[Account]:
+        """
+        Creates an account.
+
+        Parameters
+        ----------
+        address: str
+            The email address of the new account.
+        password: str
+            The password for the new account.
+
+        Returns
+        -------
+        Optional[Account]
+            The newly created account object if successful, None otherwise.
+        """
         body = {"address": f"{address}", "password": f"{password}"}
         resp = await self._interact(
             method="POST",
@@ -229,6 +375,19 @@ class xget:
             return None
 
     async def get_account(self, account_id: str) -> t.Optional[Account]:
+        """
+        Gets an account using ID.
+
+        Parameters
+        ----------
+        account_id: str
+            The ID of the account to get.
+
+        Returns
+        -------
+        Optional[Account]
+            The account object if successful, None otherwise.
+        """
         resp = await self._interact(
             method="POST",
             url=urllib.parse.urljoin(
@@ -243,6 +402,18 @@ class xget:
             return None
 
     async def delete_account(self, account_id: str) -> None:
+        """
+        Deletes an account using ID.
+
+        Parameters
+        ----------
+        account_id: str
+            The ID of the account to delete.
+
+        Returns
+        -------
+        None
+        """
         await self._interact(
             method="DELETE",
             url=urllib.parse.urljoin(
@@ -255,6 +426,21 @@ class xget:
     async def get_account_token(
         self, account_address: str, account_password: str
     ) -> t.Optional[Token]:
+        """
+        Get an account token which is used by the clients.
+
+        Parameters
+        ----------
+        account_address: str
+            The email address of the account.
+        account_password: str
+            The password of the account.
+
+        Returns
+        -------
+        Optional[Token]
+            The account token if successful, None otherwise.
+        """
         body = {
             "address": f"{account_address}",
             "password": f"{account_password}",
@@ -270,6 +456,19 @@ class xget:
             return None
 
     async def get_domain(self, domain_id: str) -> t.Optional[Domain]:
+        """
+        Get a specific domain with ID.
+
+        Parameters
+        ----------
+        domain_id: str
+            The ID of the domain to get.
+
+        Returns
+        -------
+        Optional[Domain]
+            The domain with the ID provided. If not found, returns None.
+        """
         resp = await self._interact(
             method="GET",
             url=urllib.parse.urljoin(
@@ -283,6 +482,14 @@ class xget:
             return None
 
     async def get_domains(self) -> t.Optional[DomainPageView]:
+        """
+        Get all domains.
+
+        Returns
+        -------
+        Optional[DomainPageView]
+            The domain page view if successful, None otherwise.
+        """
         resp = await self._interact(
             method="GET",
             url=urllib.parse.urljoin(self._base_url, DomainMethods.GET_ALL_DOMAINS),

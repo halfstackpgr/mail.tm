@@ -1,0 +1,1 @@
+Until the server-side implementation of the temporary email service is updated, no changes will be made without explicit announcement. If any changes are introduced, they will be immediately disclosed on this repository's page.
