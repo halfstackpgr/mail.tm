@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../async-client/">
+      
+      
+        <link rel="next" href="../pullers/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -16,7 +20,7 @@
     
     
       
-        <title>Sync client - Mail.tm SDK</title>
+        <title>Sync Server - Mail.tm SDK</title>
       
     
     
@@ -110,6 +114,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#synchronous-mail-client-implementation" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -140,7 +149,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Sync client
+              Sync Server
             
           </span>
         </div>
@@ -326,9 +335,11 @@
         
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="../sync-server.md" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
     
@@ -721,10 +732,30 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../sync-server.md" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Sync Server
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -733,6 +764,149 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mailtm.impls.client" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;client
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;SyncMail
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" SyncMail">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.get_me" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;get_me
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.get_domains" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;get_domains
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.get_domain" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;get_domain
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.get_account" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;get_account
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.create_account" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;create_account
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.delete_account" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;delete_account
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.get_messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;get_messages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.get_message" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;get_message
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.delete_message" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;delete_message
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.mark_as_seen" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;mark_as_seen
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.get_source" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;get_source
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -890,6 +1064,139 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mailtm.impls.client" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;client
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;SyncMail
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" SyncMail">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.get_me" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;get_me
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.get_domains" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;get_domains
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.get_domain" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;get_domain
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.get_account" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;get_account
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.create_account" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;create_account
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.delete_account" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;delete_account
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.get_messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;get_messages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.get_message" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;get_message
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.delete_message" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;delete_message
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.mark_as_seen" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;mark_as_seen
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mailtm.impls.client.SyncMail.get_source" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;get_source
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -920,9 +1227,884 @@
   
 
 
-  <h1>Sync client</h1>
+<h1 id="synchronous-mail-client-implementation">Synchronous Mail Client implementation.<a class="headerlink" href="#synchronous-mail-client-implementation" title="Permanent link">#</a></h1>
 
 
+<div class="doc doc-object doc-module">
+
+
+
+<a id="mailtm.impls.client"></a>
+  <div class="doc doc-contents first">
+  
+      <p>This module provides a synchronous client for the Mail.TM API.</p>
+<ul>
+<li>The client can be used to fetch data from the API, including account information, domain information, and messages.</li>
+<li>The client uses the 'requests' library to make HTTP requests to the API and the 'msgspec' library to decode the JSON responses from the API into Python objects.</li>
+<li>The client is easy to use and is designed to be used in a synchronous application.</li>
+<li>The API is documented at <a href="https://docs.mail.tm">Mail.tm Documentation</a></li>
+</ul>
+
+<details class="you-don&#39;t-have-to-worry-about:" open>
+  <summary>You don't have to worry about:</summary>
+  <ul>
+<li>The client automatically handles errors and exceptions, so you don't have to.</li>
+<li>The client also handles rate limits, so you don't have to.</li>
+</ul>
+</details>
+<details class="you-do-have-to-worry-about:" open>
+  <summary>You do have to worry about:</summary>
+  <ul>
+<li>The client does not handle connection limits, so you might have to.</li>
+<li>The client does not handle SSL verification, so you might have to.</li>
+</ul>
+</details>
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="mailtm.impls.client.SyncMail" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">SyncMail</span>
+
+
+<a href="#mailtm.impls.client.SyncMail" class="headerlink" title="Permanent link">#</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">SyncMail</span><span class="p">(</span><span class="n">account_token</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing" href="https://docs.python.org/3.10/library/typing.html#module-typing">t</a></span><span class="o">.</span><span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3.10/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-internal" title="mailtm.abc.generic.Token" href="../abc/#mailtm.abc.generic.Token">Token</a></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+</span></code></pre></div>
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Synchronous client for the Mail.TM API.</p>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">PARAMETER</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td><code>account_token</code></td>
+          <td class="doc-param-details">
+            <div class="doc-md-description">
+              <p>The account token to use for authentication. If not provided, the client will not be authenticated.</p>
+            </div>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code><a class="autorefs autorefs-external" title="typing" href="https://docs.python.org/3.10/library/typing.html#module-typing">t</a>.<a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3.10/library/typing.html#typing.Optional">Optional</a>[<a class="autorefs autorefs-internal" title="mailtm.abc.generic.Token" href="../abc/#mailtm.abc.generic.Token">Token</a>]</code>
+                </span>
+                <span class="doc-param-default">
+                  <b>DEFAULT:</b> 
+                    <code>None</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+<details class="example" open>
+  <summary>Example</summary>
+  <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">mailtm</span> <span class="kn">import</span> <span class="n">SyncMail</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">with</span> <span class="n">SyncMail</span><span class="p">()</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">account</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_me</span><span class="p">()</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="p">)</span>
+</span></code></pre></div>
+</details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="mailtm.impls.client.SyncMail.get_me" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">get_me</span>
+
+
+<a href="#mailtm.impls.client.SyncMail.get_me" class="headerlink" title="Permanent link">#</a></h4>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_me</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="typing" href="https://docs.python.org/3.10/library/typing.html#module-typing">t</a></span><span class="o">.</span><span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3.10/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><span title="mailtm.abc.modals.Account">Account</span></span><span class="p">]</span>
+</span></code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Gets the authenticated account.</p>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">RETURNS</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>Optional[<span title="mailtm.abc.modals.Account">Account</span>]</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <div class="doc-md-description">
+              <p>The account or None if the account is not authenticated.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="mailtm.impls.client.SyncMail.get_domains" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">get_domains</span>
+
+
+<a href="#mailtm.impls.client.SyncMail.get_domains" class="headerlink" title="Permanent link">#</a></h4>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_domains</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="typing" href="https://docs.python.org/3.10/library/typing.html#module-typing">t</a></span><span class="o">.</span><span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3.10/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><span title="mailtm.abc.modals.DomainPageView">DomainPageView</span></span><span class="p">]</span>
+</span></code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Get a page view of domains available under the account token provided to create a session.</p>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">RETURNS</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>Optional[<span title="mailtm.abc.modals.DomainPageView">DomainPageView</span>]</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <div class="doc-md-description">
+              <p>A page view of domains available under the account token provided to create a session. If not authenticated, returns None.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="mailtm.impls.client.SyncMail.get_domain" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">get_domain</span>
+
+
+<a href="#mailtm.impls.client.SyncMail.get_domain" class="headerlink" title="Permanent link">#</a></h4>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_domain</span><span class="p">(</span><span class="n">domain_id</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="typing" href="https://docs.python.org/3.10/library/typing.html#module-typing">t</a></span><span class="o">.</span><span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3.10/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><span title="mailtm.abc.modals.Domain">Domain</span></span><span class="p">]</span>
+</span></code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Get a specific domain with ID.</p>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">PARAMETER</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td><code>domain_id</code></td>
+          <td class="doc-param-details">
+            <div class="doc-md-description">
+              <p>The ID of the domain to get.</p>
+            </div>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a></code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">RETURNS</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>Optional[<span title="mailtm.abc.modals.Domain">Domain</span>]</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <div class="doc-md-description">
+              <p>The domain with the ID provided. If not found, returns None.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="mailtm.impls.client.SyncMail.get_account" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">get_account</span>
+
+
+<a href="#mailtm.impls.client.SyncMail.get_account" class="headerlink" title="Permanent link">#</a></h4>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_account</span><span class="p">(</span><span class="n">account_id</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="typing" href="https://docs.python.org/3.10/library/typing.html#module-typing">t</a></span><span class="o">.</span><span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3.10/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><span title="mailtm.abc.modals.Account">Account</span></span><span class="p">]</span>
+</span></code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Get an accnount by it's ID.</p>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">PARAMETER</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td><code>account_id</code></td>
+          <td class="doc-param-details">
+            <div class="doc-md-description">
+              <p>The ID of the account to get.</p>
+            </div>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a></code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">RETURNS</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>Optional[<span title="mailtm.abc.modals.Account">Account</span>]</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <div class="doc-md-description">
+              <p>The account with the ID provided. If not found, returns None.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="mailtm.impls.client.SyncMail.create_account" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">create_account</span>
+
+
+<a href="#mailtm.impls.client.SyncMail.create_account" class="headerlink" title="Permanent link">#</a></h4>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">create_account</span><span class="p">(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">address</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a></span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="typing" href="https://docs.python.org/3.10/library/typing.html#module-typing">t</a></span><span class="o">.</span><span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3.10/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><span title="mailtm.abc.modals.Account">Account</span></span><span class="p">]</span>
+</span></code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Creates an account.</p>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">PARAMETER</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td><code>address</code></td>
+          <td class="doc-param-details">
+            <div class="doc-md-description">
+              <p>The email address of the new account.</p>
+            </div>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a></code>
+                </span>
+            </p>
+          </td>
+        </tr>
+        <tr class="doc-section-item">
+          <td><code>password</code></td>
+          <td class="doc-param-details">
+            <div class="doc-md-description">
+              <p>The password for the new account.</p>
+            </div>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a></code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">RETURNS</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>Optional[<span title="mailtm.abc.modals.Account">Account</span>]</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <div class="doc-md-description">
+              <p>The newly created account object if successful, None otherwise.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="mailtm.impls.client.SyncMail.delete_account" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">delete_account</span>
+
+
+<a href="#mailtm.impls.client.SyncMail.delete_account" class="headerlink" title="Permanent link">#</a></h4>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">delete_account</span><span class="p">(</span><span class="n">account_id</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing" href="https://docs.python.org/3.10/library/typing.html#module-typing">t</a></span><span class="o">.</span><span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3.10/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</span></code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Deletes an account.</p>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">PARAMETER</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td><code>account_id</code></td>
+          <td class="doc-param-details">
+            <div class="doc-md-description">
+              <p>The ID of the account to delete. If not provided, the account token will be used to delete the account.</p>
+            </div>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code><a class="autorefs autorefs-external" title="typing" href="https://docs.python.org/3.10/library/typing.html#module-typing">t</a>.<a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3.10/library/typing.html#typing.Optional">Optional</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a>]</code>
+                </span>
+                <span class="doc-param-default">
+                  <b>DEFAULT:</b> 
+                    <code>None</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="mailtm.impls.client.SyncMail.get_messages" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">get_messages</span>
+
+
+<a href="#mailtm.impls.client.SyncMail.get_messages" class="headerlink" title="Permanent link">#</a></h4>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_messages</span><span class="p">(</span><span class="n">page</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/functions.html#int">int</a></span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="typing" href="https://docs.python.org/3.10/library/typing.html#module-typing">t</a></span><span class="o">.</span><span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3.10/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><span title="mailtm.abc.modals.MessagePageView">MessagePageView</span></span><span class="p">]</span>
+</span></code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Get a page view of messages available under the account token provided to create a session.</p>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">PARAMETER</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td><code>page</code></td>
+          <td class="doc-param-details">
+            <div class="doc-md-description">
+              <p>The page number to get. Defaults to 1.</p>
+            </div>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/functions.html#int">int</a></code>
+                </span>
+                <span class="doc-param-default">
+                  <b>DEFAULT:</b> 
+                    <code>1</code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">RETURNS</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>Optional[<span title="mailtm.abc.modals.MessagePageView">MessagePageView</span>]</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <div class="doc-md-description">
+              <p>A page view of messages available under the account token provided to create a session. If not authenticated, returns None.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="mailtm.impls.client.SyncMail.get_message" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">get_message</span>
+
+
+<a href="#mailtm.impls.client.SyncMail.get_message" class="headerlink" title="Permanent link">#</a></h4>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_message</span><span class="p">(</span><span class="n">message_id</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="typing" href="https://docs.python.org/3.10/library/typing.html#module-typing">t</a></span><span class="o">.</span><span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3.10/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><span title="mailtm.abc.modals.Message">Message</span></span><span class="p">]</span>
+</span></code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Get a specific message with ID.</p>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">PARAMETER</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td><code>message_id</code></td>
+          <td class="doc-param-details">
+            <div class="doc-md-description">
+              <p>The ID of the message to get.</p>
+            </div>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a></code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">RETURNS</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>Optional[<span title="mailtm.abc.modals.Message">Message</span>]</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <div class="doc-md-description">
+              <p>The message with the ID provided. If not found, returns None.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="mailtm.impls.client.SyncMail.delete_message" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">delete_message</span>
+
+
+<a href="#mailtm.impls.client.SyncMail.delete_message" class="headerlink" title="Permanent link">#</a></h4>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">delete_message</span><span class="p">(</span><span class="n">message_id</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</span></code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Delete a specific message with ID.</p>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">PARAMETER</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td><code>message_id</code></td>
+          <td class="doc-param-details">
+            <div class="doc-md-description">
+              <p>The ID of the message to delete.</p>
+            </div>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a></code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">RETURNS</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>None</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <div class="doc-md-description">
+              
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="mailtm.impls.client.SyncMail.mark_as_seen" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">mark_as_seen</span>
+
+
+<a href="#mailtm.impls.client.SyncMail.mark_as_seen" class="headerlink" title="Permanent link">#</a></h4>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">mark_as_seen</span><span class="p">(</span><span class="n">message_id</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</span></code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Flag a message as seen.</p>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">PARAMETER</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td><code>message_id</code></td>
+          <td class="doc-param-details">
+            <div class="doc-md-description">
+              <p>The ID of the message to mark as seen.</p>
+            </div>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a></code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">RETURNS</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>None</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <div class="doc-md-description">
+              
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="mailtm.impls.client.SyncMail.get_source" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">get_source</span>
+
+
+<a href="#mailtm.impls.client.SyncMail.get_source" class="headerlink" title="Permanent link">#</a></h4>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">get_source</span><span class="p">(</span><span class="n">source_id</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="typing" href="https://docs.python.org/3.10/library/typing.html#module-typing">t</a></span><span class="o">.</span><span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3.10/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><span title="mailtm.abc.modals.Source">Source</span></span><span class="p">]</span>
+</span></code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Get source by the source ID.</p>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">PARAMETER</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td><code>source_id</code></td>
+          <td class="doc-param-details">
+            <div class="doc-md-description">
+              <p>The ID of the source to get.</p>
+            </div>
+            <p>
+                <span class="doc-param-annotation">
+                  <b>TYPE:</b>
+                    <code><a class="autorefs autorefs-external" href="https://docs.python.org/3.10/library/stdtypes.html#str">str</a></code>
+                </span>
+            </p>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th><span class="doc-section-title">RETURNS</span></th>
+        <th><span>DESCRIPTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="doc-section-item">
+          <td>
+              <span class="doc-returns-annotation">
+                  <code>Optional[<span title="mailtm.abc.modals.Source">Source</span>]</code>
+              </span>
+          </td>
+          <td class="doc-returns-details">
+            <div class="doc-md-description">
+              <p>The source with the ID provided. If not found, returns None.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
 
 
 
@@ -955,6 +2137,44 @@
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../async-client/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Async Client">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Async Client
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../pullers/" class="md-footer__link md-footer__link--next" aria-label="Next: Pullers">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Pullers
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">
