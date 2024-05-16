@@ -1,15 +1,8 @@
-from __future__ import division
-
+from __future__ import annotations
 from setuptools import setup, find_namespace_packages
 
-with open("README.md", "r", encoding="utf-8") as f:
+with open('README.md', "r", encoding="utf-8") as f:
     description = f.read()
-
-
-def parse_requirements_file(path):
-    with open(path) as fp:
-        dependencies = (d.strip() for d in fp.read().split("\n") if d.strip())
-        return [d for d in dependencies if not d.startswith("#")]
 
 
 setup(
@@ -20,10 +13,23 @@ setup(
     long_description_content_type="text/markdown",
     author="Parth Mishra",
     author_email="halfstackpgr@gmail.com",
-    maintainer="Parth Mishra",
+    maintainer="Parth Mishra", 
     maintainer_email="halfstackpgr@gmail.com",
     url="https://halfstackpgr.github.io/Mail.tm/",
     packages=find_namespace_packages(include=["mailtm*"]),
-    entry_points={"console_scripts": ["mailtm = mailtm.cli:version"]},
-    requires=parse_requirements_file("requirements.txt"),
+    entry_points={
+        "console_scripts": ["mailtm = mailtm.cli:version"]
+        },
+    install_requires = ["aiohttp", "requests", "msgspec", "colorama"],
+    classifiers=[
+    "Development Status :: 0.1.0 Completed",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: API Wrappers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed"
+    ]
 )
