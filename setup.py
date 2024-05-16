@@ -7,7 +7,7 @@ with open('README.md', "r", encoding="utf-8") as f:
 
 setup(
     name="mailtm-sdk",
-    version="0.1.0",
+    version="0.1.1",
     description="Mail.tm Stack Development Kit, designed to enhance your experience with the renowned temporary email service, mail.tm",
     long_description=description,
     long_description_content_type="text/markdown",
