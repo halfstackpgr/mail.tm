@@ -99,9 +99,7 @@ class get:
         if resp.status_code == 200:
             return resp.content
         elif resp.status_code == 400:
-            raise MissingArgument(
-                "Something in your payload is missing! Or, the payload isn't there at all."
-            )
+            raise MissingArgument("Something in your payload is missing! Or, the payload isn't there at all.")
         elif resp.status_code == 401:
             raise AccountTokenInvalid(
                 "Your token isn't correct (Or the headers hasn't a token at all!). Remember, every request (Except POST /accounts and POST /token) should be authenticated with a Bearer token!"
@@ -147,9 +145,7 @@ class get:
         """
         body = {"address": f"{address}", "password": f"{password}"}
         resp = self._interact(
-            method="POST",
-            url=urllib.parse.urljoin(self._base_url, AccountMethods.CREATE_ACCOUNT),
-            body=body,
+            method="POST", url=urllib.parse.urljoin(self._base_url, AccountMethods.CREATE_ACCOUNT), body=body
         )
         if resp is not None:
             return msgspec.json.decode(resp, type=Account, strict=False)
@@ -172,10 +168,7 @@ class get:
         """
         resp = self._interact(
             method="POST",
-            url=urllib.parse.urljoin(
-                self._base_url,
-                AccountMethods.GET_ACCOUNT_BY_ID.format(id=f"{account_id}"),
-            ),
+            url=urllib.parse.urljoin(self._base_url, AccountMethods.GET_ACCOUNT_BY_ID.format(id=f"{account_id}")),
             params={"id": f"{account_id}"},
         )
         if resp is not None:
@@ -198,17 +191,12 @@ class get:
             True if successful, False otherwise.
         """
         resp = requests.delete(
-            url=urllib.parse.urljoin(
-                self._base_url,
-                AccountMethods.DELETE_ACCOUNT_BY_ID.format(id=f"{account_id}"),
-            ),
+            url=urllib.parse.urljoin(self._base_url, AccountMethods.DELETE_ACCOUNT_BY_ID.format(id=f"{account_id}")),
             params={"id": f"{account_id}"},
         )
         return resp.status_code == 204
 
-    def get_account_token(
-        self, account_address: str, account_password: str
-    ) -> t.Optional[Token]:
+    def get_account_token(self, account_address: str, account_password: str) -> t.Optional[Token]:
         """
         Get an account token which is used by the clients.
 
@@ -224,14 +212,9 @@ class get:
         Optional[Token]
             The account token if successful, None otherwise.
         """
-        body = {
-            "address": f"{account_address}",
-            "password": f"{account_password}",
-        }
+        body = {"address": f"{account_address}", "password": f"{account_password}"}
         resp = self._interact(
-            method="POST",
-            url=urllib.parse.urljoin(self._base_url, AccountMethods.GET_ACCOUNT_TOKEN),
-            body=body,
+            method="POST", url=urllib.parse.urljoin(self._base_url, AccountMethods.GET_ACCOUNT_TOKEN), body=body
         )
         if resp is not None:
             return msgspec.json.decode(resp, type=Token, strict=False)
@@ -254,10 +237,7 @@ class get:
         """
         resp = self._interact(
             method="GET",
-            url=urllib.parse.urljoin(
-                self._base_url,
-                DomainMethods.GET_DOMAIN_BY_ID.format(id=f"{domain_id}"),
-            ),
+            url=urllib.parse.urljoin(self._base_url, DomainMethods.GET_DOMAIN_BY_ID.format(id=f"{domain_id}")),
         )
         if resp is not None:
             return msgspec.json.decode(resp, type=Domain, strict=False)
@@ -273,10 +253,7 @@ class get:
         Optional[DomainPageView]
             The domain page view if successful, None otherwise.
         """
-        resp = self._interact(
-            method="GET",
-            url=urllib.parse.urljoin(self._base_url, DomainMethods.GET_ALL_DOMAINS),
-        )
+        resp = self._interact(method="GET", url=urllib.parse.urljoin(self._base_url, DomainMethods.GET_ALL_DOMAINS))
         if resp is not None:
             return msgspec.json.decode(resp, type=DomainPageView, strict=False)
         else:
@@ -312,9 +289,7 @@ class xget:
                 if result.status == 200:
                     return await result.read()
                 elif result.status == 400:
-                    raise MissingArgument(
-                        "Something in your payload is missing! Or, the payload isn't there at all."
-                    )
+                    raise MissingArgument("Something in your payload is missing! Or, the payload isn't there at all.")
                 elif result.status == 401:
                     raise AccountTokenInvalid(
                         "Your token isn't correct (Or the headers hasn't a token at all!). Remember, every request (Except POST /accounts and POST /token) should be authenticated with a Bearer token!"
@@ -340,9 +315,7 @@ class xget:
                         "You exceeded the limit of 8 requests per second! Try delaying the request by one second!"
                     )
                 else:
-                    raise ValueError(
-                        f"Unknown Error\nPayload: {(await result.read()).decode()}"
-                    )
+                    raise ValueError(f"Unknown Error\nPayload: {(await result.read()).decode()}")
         except Exception as e:
             print(f"{str(e)}")
             return None
@@ -365,9 +338,7 @@ class xget:
         """
         body = {"address": f"{address}", "password": f"{password}"}
         resp = await self._interact(
-            method="POST",
-            url=urllib.parse.urljoin(self._base_url, AccountMethods.CREATE_ACCOUNT),
-            body=body,
+            method="POST", url=urllib.parse.urljoin(self._base_url, AccountMethods.CREATE_ACCOUNT), body=body
         )
         if resp is not None:
             return msgspec.json.decode(resp, type=Account, strict=False)
@@ -390,10 +361,7 @@ class xget:
         """
         resp = await self._interact(
             method="POST",
-            url=urllib.parse.urljoin(
-                self._base_url,
-                AccountMethods.GET_ACCOUNT_BY_ID.format(id=account_id),
-            ),
+            url=urllib.parse.urljoin(self._base_url, AccountMethods.GET_ACCOUNT_BY_ID.format(id=account_id)),
             params={"id": f"{account_id}"},
         )
         if resp is not None:
@@ -416,16 +384,11 @@ class xget:
         """
         await self._interact(
             method="DELETE",
-            url=urllib.parse.urljoin(
-                self._base_url,
-                AccountMethods.DELETE_ACCOUNT_BY_ID.format(id=account_id),
-            ),
+            url=urllib.parse.urljoin(self._base_url, AccountMethods.DELETE_ACCOUNT_BY_ID.format(id=account_id)),
             params={"id": f"{account_id}"},
         )
 
-    async def get_account_token(
-        self, account_address: str, account_password: str
-    ) -> t.Optional[Token]:
+    async def get_account_token(self, account_address: str, account_password: str) -> t.Optional[Token]:
         """
         Get an account token which is used by the clients.
 
@@ -441,14 +404,9 @@ class xget:
         Optional[Token]
             The account token if successful, None otherwise.
         """
-        body = {
-            "address": f"{account_address}",
-            "password": f"{account_password}",
-        }
+        body = {"address": f"{account_address}", "password": f"{account_password}"}
         resp = await self._interact(
-            method="POST",
-            url=urllib.parse.urljoin(self._base_url, AccountMethods.GET_ACCOUNT_TOKEN),
-            body=body,
+            method="POST", url=urllib.parse.urljoin(self._base_url, AccountMethods.GET_ACCOUNT_TOKEN), body=body
         )
         if resp is not None:
             return msgspec.json.decode(resp, type=Token, strict=False)
@@ -470,11 +428,7 @@ class xget:
             The domain with the ID provided. If not found, returns None.
         """
         resp = await self._interact(
-            method="GET",
-            url=urllib.parse.urljoin(
-                self._base_url,
-                DomainMethods.GET_DOMAIN_BY_ID.format(id=domain_id),
-            ),
+            method="GET", url=urllib.parse.urljoin(self._base_url, DomainMethods.GET_DOMAIN_BY_ID.format(id=domain_id))
         )
         if resp is not None:
             return msgspec.json.decode(resp, type=Domain, strict=False)
@@ -491,8 +445,7 @@ class xget:
             The domain page view if successful, None otherwise.
         """
         resp = await self._interact(
-            method="GET",
-            url=urllib.parse.urljoin(self._base_url, DomainMethods.GET_ALL_DOMAINS),
+            method="GET", url=urllib.parse.urljoin(self._base_url, DomainMethods.GET_ALL_DOMAINS)
         )
         if resp is not None:
             return msgspec.json.decode(resp, type=DomainPageView, strict=False)

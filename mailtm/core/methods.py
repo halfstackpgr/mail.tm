@@ -6,13 +6,7 @@ The classes are used to construct method calls to the API of Mail.tm and make re
 
 from __future__ import annotations
 
-__all__ = [
-    "DomainMethods",
-    "AccountMethods",
-    "MessageMethods",
-    "ServerAuth",
-    "AttachServer",
-]
+__all__ = ["DomainMethods", "AccountMethods", "MessageMethods", "ServerAuth", "AttachServer"]
 
 from dataclasses import dataclass
 import typing as t

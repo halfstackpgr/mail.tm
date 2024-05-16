@@ -29,14 +29,7 @@ import urllib.parse
 import msgspec
 import typing as t
 
-from ..abc.modals import (
-    Account,
-    DomainPageView,
-    MessagePageView,
-    Domain,
-    Message,
-    Source,
-)
+from ..abc.modals import Account, DomainPageView, MessagePageView, Domain, Message, Source
 from ..abc.generic import Token
 from ..core.methods import AccountMethods, DomainMethods, MessageMethods
 from ..core.errors import (
@@ -75,9 +68,7 @@ class SyncMail:
         self._base_url = "https://api.mail.tm"
         self._client = requests.Session()
         if self._account_token is not None:
-            self._client.headers.update(
-                {"Authorization": f"Bearer {self._account_token}"}
-            )
+            self._client.headers.update({"Authorization": f"Bearer {self._account_token}"})
 
     def _interact(
         self,
@@ -118,9 +109,7 @@ class SyncMail:
         if result.status_code == 200:
             return result.content
         elif result.status_code == 400:
-            raise MissingArgument(
-                "Something in your payload is missing! Or, the payload isn't there at all."
-            )
+            raise MissingArgument("Something in your payload is missing! Or, the payload isn't there at all.")
         elif result.status_code == 401:
             raise AccountTokenInvalid(
                 "Your token isn't correct (Or the headers hasn't a token at all!). Remember, every request (Except POST /accounts and POST /token) should be authenticated with a Bearer token!"
@@ -188,9 +177,7 @@ class SyncMail:
         Optional[DomainPageView]
             A page view of domains available under the account token provided to create a session. If not authenticated, returns None.
         """
-        resp = self._interact(
-            method="GET", url=self._create_url(DomainMethods.GET_ALL_DOMAINS)
-        )
+        resp = self._interact(method="GET", url=self._create_url(DomainMethods.GET_ALL_DOMAINS))
         if resp is not None:
             return msgspec.json.decode(resp, type=DomainPageView, strict=False)
         else:
@@ -210,10 +197,7 @@ class SyncMail:
         Optional[Domain]
             The domain with the ID provided. If not found, returns None.
         """
-        resp = self._interact(
-            method="GET",
-            url=self._create_url(DomainMethods.GET_DOMAIN_BY_ID.format(id=domain_id)),
-        )
+        resp = self._interact(method="GET", url=self._create_url(DomainMethods.GET_DOMAIN_BY_ID.format(id=domain_id)))
         if resp is not None:
             return msgspec.json.decode(resp, type=Domain, strict=False)
         else:
@@ -235,9 +219,7 @@ class SyncMail:
         """
         resp = self._interact(
             method="POST",
-            url=self._create_url(
-                AccountMethods.GET_ACCOUNT_BY_ID.format(id=account_id)
-            ),
+            url=self._create_url(AccountMethods.GET_ACCOUNT_BY_ID.format(id=account_id)),
             params={"id": f"{account_id}"},
         )
         if resp is not None:
@@ -262,11 +244,7 @@ class SyncMail:
             The newly created account object if successful, None otherwise.
         """
         body = {"address": f"{address}", "password": f"{password}"}
-        resp = self._interact(
-            method="POST",
-            url=self._create_url(AccountMethods.CREATE_ACCOUNT),
-            body=body,
-        )
+        resp = self._interact(method="POST", url=self._create_url(AccountMethods.CREATE_ACCOUNT), body=body)
         if resp is not None:
             return msgspec.json.decode(resp, type=Account, strict=False)
         else:
@@ -284,18 +262,11 @@ class SyncMail:
         if self._account_token is not None and account_id is None:
             self._interact(
                 method="DELETE",
-                url=self._create_url(
-                    AccountMethods.DELETE_ACCOUNT_BY_ID.format(
-                        id=self._account_token.id
-                    )
-                ),
+                url=self._create_url(AccountMethods.DELETE_ACCOUNT_BY_ID.format(id=self._account_token.id)),
             )
         elif account_id is not None:
             self._interact(
-                method="DELETE",
-                url=self._create_url(
-                    AccountMethods.DELETE_ACCOUNT_BY_ID.format(id=account_id)
-                ),
+                method="DELETE", url=self._create_url(AccountMethods.DELETE_ACCOUNT_BY_ID.format(id=account_id))
             )
         else:
             raise AccountTokenInvalid("You need an account token to delete an account!")
@@ -315,11 +286,7 @@ class SyncMail:
             A page view of messages available under the account token provided to create a session. If not authenticated, returns None.
         """
         params = {"page": f"{page}"}
-        resp = self._interact(
-            method="GET",
-            url=self._create_url(MessageMethods.GET_ALL_MESSAGES),
-            params=params,
-        )
+        resp = self._interact(method="GET", url=self._create_url(MessageMethods.GET_ALL_MESSAGES), params=params)
         if resp is not None:
             return msgspec.json.decode(resp, type=MessagePageView, strict=False)
         else:
@@ -341,11 +308,7 @@ class SyncMail:
         """
         params = {"id": f"{message_id}"}
         resp = self._interact(
-            method="GET",
-            url=self._create_url(
-                MessageMethods.GET_MESSAGE_BY_ID.format(id=message_id)
-            ),
-            params=params,
+            method="GET", url=self._create_url(MessageMethods.GET_MESSAGE_BY_ID.format(id=message_id)), params=params
         )
         if resp is not None:
             return msgspec.json.decode(resp, type=Message, strict=False)
@@ -368,9 +331,7 @@ class SyncMail:
         params = {"id": f"{message_id}"}
         self._interact(
             method="DELETE",
-            url=self._create_url(
-                MessageMethods.DELETE_MESSAGE_BY_ID.format(id=message_id)
-            ),
+            url=self._create_url(MessageMethods.DELETE_MESSAGE_BY_ID.format(id=message_id)),
             params=params,
         )
 
@@ -390,9 +351,7 @@ class SyncMail:
         params = {"id": f"{message_id}"}
         self._interact(
             method="PATCH",
-            url=self._create_url(
-                MessageMethods.PATCH_MESSAGE_BY_ID.format(id=message_id)
-            ),
+            url=self._create_url(MessageMethods.PATCH_MESSAGE_BY_ID.format(id=message_id)),
             params=params,
         )
 
@@ -412,9 +371,7 @@ class SyncMail:
         """
         params = {"id": f"{source_id}"}
         resp = self._interact(
-            method="GET",
-            url=self._create_url(MessageMethods.GET_SOURCES_BY_ID.format(id=source_id)),
-            params=params,
+            method="GET", url=self._create_url(MessageMethods.GET_SOURCES_BY_ID.format(id=source_id)), params=params
         )
         if resp is not None:
             return msgspec.json.decode(resp, type=Source, strict=False)

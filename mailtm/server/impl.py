@@ -1,12 +1,7 @@
 import pathlib
 import typing as t
 
-from .events import (
-    NewAccountCreated,
-    MessageDelete,
-    AccountSwitched,
-    AccountDeleted,
-)
+from .events import NewAccountCreated, MessageDelete, AccountSwitched, AccountDeleted
 from .srv import MailServerBase, default_banner
 from .cache import CacheType
 
@@ -27,18 +22,9 @@ class MailServer(MailServerBase):
         enable_logging: bool | None = False,
     ) -> None:
         self.pull = xget()
-        super().__init__(
-            server_auth,
-            pooling_rate,
-            banner,
-            banner_path,
-            suppress_errors,
-            enable_logging,
-        )
+        super().__init__(server_auth, pooling_rate, banner, banner_path, suppress_errors, enable_logging)
 
-    async def create_account(
-        self, account_address: str, account_password: str
-    ) -> t.Optional[Account]:
+    async def create_account(self, account_address: str, account_password: str) -> t.Optional[Account]:
         """
         Creates a new account with the given email address and password.
 
@@ -55,9 +41,7 @@ class MailServer(MailServerBase):
             The newly created account object if successful, None otherwise.
         """
         try:
-            new_account = await self.mail_client.create_account(
-                account_address, account_password
-            )
+            new_account = await self.mail_client.create_account(account_address, account_password)
             token = await self.pull.get_account_token(account_address, account_password)
             if token is not None and new_account is not None:
                 account_auth = ServerAuth(
@@ -75,9 +59,7 @@ class MailServer(MailServerBase):
                         _server=AttachServer(self),
                     )
                 )
-                self.collector.add_item_to_cache(
-                    cache_type=CacheType.NEW_ACCOUNTS, item=new_account
-                )
+                self.collector.add_item_to_cache(cache_type=CacheType.NEW_ACCOUNTS, item=new_account)
             return new_account
         except Exception as e:
             self.log(message="Could not create account: " + str(e), severity="ERROR")
@@ -108,14 +90,9 @@ class MailServer(MailServerBase):
                         _server=AttachServer(self),
                     )
                 )
-                self.collector.add_item_to_cache(
-                    cache_type=CacheType.OLD_MESSAGE, item=message
-                )
+                self.collector.add_item_to_cache(cache_type=CacheType.OLD_MESSAGE, item=message)
             except Exception as e:
-                self.log(
-                    message="Could not delete message: " + str(e),
-                    severity="ERROR",
-                )
+                self.log(message="Could not delete message: " + str(e), severity="ERROR")
                 return None
 
     async def switch_account(self, new_account_token: t.Union[Token, str]) -> None:
@@ -133,28 +110,14 @@ class MailServer(MailServerBase):
         """
         try:
             if isinstance(new_account_token, Token):
-                self.mail_client._client.headers.update(
-                    {"Authorization": f"Bearer {new_account_token.token}"}
-                )
-                self.log(
-                    message=f"Switched to new account with ID: {new_account_token.id}",
-                    severity="WARNING",
-                )
+                self.mail_client._client.headers.update({"Authorization": f"Bearer {new_account_token.token}"})
+                self.log(message=f"Switched to new account with ID: {new_account_token.id}", severity="WARNING")
             if isinstance(new_account_token, str):
-                self.mail_client._client.headers.update(
-                    {"Authorization": f"Bearer {new_account_token}"}
-                )
-                self.log(
-                    message=f"Switched to new account with Token: {new_account_token}",
-                    severity="WARNING",
-                )
+                self.mail_client._client.headers.update({"Authorization": f"Bearer {new_account_token}"})
+                self.log(message=f"Switched to new account with Token: {new_account_token}", severity="WARNING")
 
             await self.dispatch(
-                AccountSwitched(
-                    event="Account switched",
-                    client=self.mail_client,
-                    _server=AttachServer(self),
-                )
+                AccountSwitched(event="Account switched", client=self.mail_client, _server=AttachServer(self))
             )
 
         except Exception as e:
