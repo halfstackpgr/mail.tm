@@ -1,8 +1,8 @@
 """
 This module contains all the classes and functions that make HTTP requests to the Mail.TM API (client- less).
-It is divided into two main classes: 
+It is divided into two main classes:
 
-- get 
+- get
     which is a synchronous class
 - xget
     which is an asynchronous class.
@@ -10,7 +10,7 @@ It is divided into two main classes:
 Each class has methods that correspond to the API endpoints.
 
 - These methods will take the necessary parameters and make a request to the corresponding endpoint.
-- The methods will return the response of the API in the form of a type hinteded object. 
+- The methods will return the response of the API in the form of a type hinteded object.
 - If the method returns `None`, it means that the request failed and the error is not explicitly handled by the method.
 
 The methods of `xget` return `None` and the error is handled by the method itself, so you don't need to handle it.

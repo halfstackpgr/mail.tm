@@ -44,7 +44,7 @@ __all__ = [
     "xget",
     "get",
     "errors",
-    "methods"
+    "methods",
 ]
 
 from .server import events as ServerEvents
