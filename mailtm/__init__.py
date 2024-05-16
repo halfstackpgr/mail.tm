@@ -33,6 +33,7 @@ For further updates visit: [GitHub](https://github.com/halfstackpgr/mailtm)
 """
 
 __version__ = "0.1.0"
+
 __all__ = [
     "MailServer",
     "ServerEvents",
@@ -42,6 +43,8 @@ __all__ = [
     "SyncMail",
     "xget",
     "get",
+    "errors",
+    "methods"
 ]
 
 from .server import events as ServerEvents
@@ -51,3 +54,4 @@ from .abc import modals as ModalTypes
 from .impls.xclient import AsyncMail
 from .impls.client import SyncMail
 from .impls.pullers import get, xget
+from .core import errors, methods
