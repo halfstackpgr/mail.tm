@@ -22,7 +22,6 @@ setup(
         },
     install_requires = ["aiohttp", "requests", "msgspec", "colorama"],
     classifiers=[
-    "Development Status :: 0.1.0 Completed",
     "Environment :: Console",
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
