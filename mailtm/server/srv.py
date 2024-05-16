@@ -88,7 +88,7 @@ class MailServerBase:
         )
         self.collector = InternalCache()
 
-    def _extracted_from_on_new_domain_4(self, arg0, func):
+    def _extracted_from_on_new_domain_4(self, arg0: t.Any, func: t.Any):
         if arg0 not in self.handlers:
             self.handlers[arg0] = []
         self.handlers[arg0].append(func)
