@@ -5,9 +5,14 @@
   <h1>Mail.tm</h1>
   <text>Stack Development Kit (Python)</br></text>
     <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v1.json" alt="Ruff">
-    <img src="https://github.com/halfstackpgr/py-codeforces/actions/workflows/python-publish.yml/badge.svg" alt="Passing Package">
+    <img src="https://github.com/halfstackpgr/Mail.tm/actions/workflows/python-publish.yml/badge.svg" alt="Passing Package">
     <img src="https://img.shields.io/badge/python-Strict-checking?style=plastic&logo=python&label=Type-Checking&labelColor=yellow" alt="Static Badge">
 </div>
+
+## Installation
+```ps1
+pip install mailtm-sdk
+```
 
 > [!TIP]
 > Without the documentation it is almost worthless to even start to operate with the library, kindly refer to the [**documentation**](https://halfstackpgr.github.io/Mail.tm/).
