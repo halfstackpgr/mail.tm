@@ -106,7 +106,7 @@ class SyncMail:
             result = self._client.patch(url=url, json=body)
         else:
             raise MethodNotAllowed("Report this as a bug on GitHub")
-        if result.status_code == 200:
+        if str(result.status_code).startswith("20"):
             return result.content
         elif result.status_code == 400:
             raise MissingArgument("Something in your payload is missing! Or, the payload isn't there at all.")

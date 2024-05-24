@@ -110,7 +110,7 @@ class AsyncMail:
         else:
             raise MethodNotAllowed("Report this as a bug on GitHub")
 
-        if result.status == 200:
+        if str(result.status).startswith("20"):
             return await result.read()
         elif result.status == 400:
             raise MissingArgument("Something in your payload is missing! Or, the payload isn't there at all.")

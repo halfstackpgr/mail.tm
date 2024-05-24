@@ -96,7 +96,7 @@ class get:
         elif method == "PATCH":
             resp = requests.patch(url=url, params=params, json=body)
 
-        if resp.status_code == 200:
+        if str(resp.status_code).startswith("20"):
             return resp.content
         elif resp.status_code == 400:
             raise MissingArgument("Something in your payload is missing! Or, the payload isn't there at all.")
@@ -286,7 +286,7 @@ class xget:
         try:
             async with aiohttp.request(method, url, params=params, json=body) as resp:
                 result = resp
-                if result.status == 200:
+                if str(result.status).startswith("20"):
                     return await result.read()
                 elif result.status == 400:
                     raise MissingArgument("Something in your payload is missing! Or, the payload isn't there at all.")
