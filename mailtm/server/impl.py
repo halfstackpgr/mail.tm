@@ -110,14 +110,14 @@ class MailServer(MailServerBase):
         """
         try:
             if isinstance(new_account_token, Token):
-                self.mail_client._client.headers.update({"Authorization": f"Bearer {new_account_token.token}"})
+                self.mail_client._client.headers.update({"Authorization": f"Bearer {new_account_token.token}"}) #type: ignore
                 self.log(message=f"Switched to new account with ID: {new_account_token.id}", severity="WARNING")
             if isinstance(new_account_token, str):
-                self.mail_client._client.headers.update({"Authorization": f"Bearer {new_account_token}"})
-                self.log(message=f"Switched to new account with Token: {new_account_token}", severity="WARNING")
+                self.mail_client._client.headers.update({"Authorization": f"Bearer {new_account_token}"}) #type: ignore
+                self.log(message=f"Switched to new account with Token: {new_account_token}", severity="WARNING") 
 
             await self.dispatch(
-                AccountSwitched(event="Account switched", client=self.mail_client, _server=AttachServer(self))
+                AccountSwitched(event="Account switched", client=self.mail_client, _server=AttachServer(self), last_account_auth=self._server_auth)
             )
 
         except Exception as e:

@@ -10,7 +10,7 @@ text = r'''
 {mail}|_|  |_|\__,_|_|_(_)__|_| |_| |_|{reset}                       
         {sdk} ____  ____  _  __{reset}         {issues}Issues: https://github.com/halfstackpgr/Mail.tm/Issues{reset}
         {sdk}/ ___||  _ \| |/ /{reset}        
-        {sdk}\___ \| | | | ' /{reset}          {version}Version: 0.1.0                             Coverage: 98%{reset}  
+        {sdk}\___ \| | | | ' /{reset}          {version}Version: 0.1.2                            Coverage: 98%{reset}  
         {sdk} ___) | |_| | . \{reset}       
         {sdk}|____/|____/|_|\_\{reset}         {dateandtime}Time: {time}                             Date:{date}{reset}
 '''
