@@ -37,14 +37,22 @@ class InternalCache:
     """
 
     def __init__(self) -> None:
-        self.internal_memory_map: t.Dict[CacheType, t.Union[t.List[Message], t.List[Account], t.List[Domain]]] = {}
+        self.internal_memory_map: t.Dict[
+            CacheType,
+            t.Union[t.List[Message], t.List[Account], t.List[Domain]],
+        ] = {}
 
     def build_cache(self) -> None:
         """
         Builds the initial cache structure with empty lists for different cache types.
         """
         self.internal_memory_map.update(
-            {CacheType.DOMAIN: [], CacheType.NEW_ACCOUNTS: [], CacheType.NEW_MESSAGE: [], CacheType.OLD_MESSAGE: []}
+            {
+                CacheType.DOMAIN: [],
+                CacheType.NEW_ACCOUNTS: [],
+                CacheType.NEW_MESSAGE: [],
+                CacheType.OLD_MESSAGE: [],
+            }
         )
 
     def get_old_messages(self) -> t.Optional[t.List[Message]]:
@@ -132,7 +140,9 @@ class InternalCache:
             CacheType.OLD_MESSAGE: [],
         }
 
-    def add_item_to_cache(self, cache_type: CacheType, item: t.Union[Message, Account, Domain]) -> None:
+    def add_item_to_cache(
+        self, cache_type: CacheType, item: t.Union[Message, Account, Domain]
+    ) -> None:
         """
         Adds an item to the internal cache of the InternalCache object.
 

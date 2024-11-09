@@ -48,7 +48,9 @@ class BaseEvent:
         This is not supposed to be used by the user. This attaches a server instance to dispatch events within from events.
     """
 
-    def __init__(self, event: str, client: AsyncMail, _server: AttachServer) -> None:
+    def __init__(
+        self, event: str, client: AsyncMail, _server: AttachServer
+    ) -> None:
         self._server = _server
         self._event = event
         self._client = client
@@ -100,7 +102,13 @@ class NewMessage(BaseEvent):
         The message that was received.
     """
 
-    def __init__(self, event: str, client: AsyncMail, _server: AttachServer, new_message: Message) -> None:
+    def __init__(
+        self,
+        event: str,
+        client: AsyncMail,
+        _server: AttachServer,
+        new_message: Message,
+    ) -> None:
         self._new_message = new_message
         super().__init__(event, client, _server)
 
@@ -122,7 +130,12 @@ class NewMessage(BaseEvent):
         """
         if self.new_message.message_id is not None:
             await self._server.server.dispatch(
-                MessageDelete("MessageDelete", self.client, self.new_message, self._server)
+                MessageDelete(
+                    "MessageDelete",
+                    self.client,
+                    self.new_message,
+                    self._server,
+                )
             )
             await self.client.delete_message(self.new_message.message_id)
 
@@ -145,7 +158,13 @@ class MessageDelete(BaseEvent):
         The message that was deleted.
     """
 
-    def __init__(self, event: str, client: AsyncMail, deleted_message: Message, _server: AttachServer) -> None:
+    def __init__(
+        self,
+        event: str,
+        client: AsyncMail,
+        deleted_message: Message,
+        _server: AttachServer,
+    ) -> None:
         self._deleted_message = deleted_message
         super().__init__(event, client, _server)
 
@@ -172,7 +191,13 @@ class DomainChange(BaseEvent):
         The new domain that was set.
     """
 
-    def __init__(self, new_domain: Domain, event: str, client: AsyncMail, _server: AttachServer) -> None:
+    def __init__(
+        self,
+        new_domain: Domain,
+        event: str,
+        client: AsyncMail,
+        _server: AttachServer,
+    ) -> None:
         self._new_domain = new_domain
         super().__init__(event, client, _server)
 
@@ -200,7 +225,13 @@ class AccountSwitched(BaseEvent):
 
     """
 
-    def __init__(self, event: str, client: AsyncMail, _server: AttachServer, last_account_auth: ServerAuth) -> None:
+    def __init__(
+        self,
+        event: str,
+        client: AsyncMail,
+        _server: AttachServer,
+        last_account_auth: ServerAuth,
+    ) -> None:
         self._last_account_auth = last_account_auth
         super().__init__(event, client, _server)
 
@@ -231,7 +262,12 @@ class NewAccountCreated(BaseEvent):
     """
 
     def __init__(
-        self, new_account_auth: ServerAuth, new_account: Account, event: str, client: AsyncMail, _server: AttachServer
+        self,
+        new_account_auth: ServerAuth,
+        new_account: Account,
+        event: str,
+        client: AsyncMail,
+        _server: AttachServer,
     ) -> None:
         self._new_account_aut = new_account_auth
         self._new_account = new_account
@@ -267,7 +303,9 @@ class AccountDeleted(BaseEvent):
     Event triggered when an account is deleted.
     """
 
-    def __init__(self, event: str, client: AsyncMail, _server: AttachServer) -> None:
+    def __init__(
+        self, event: str, client: AsyncMail, _server: AttachServer
+    ) -> None:
         super().__init__(event, client, _server)
 
 
@@ -276,7 +314,9 @@ class ServerStarted(BaseEvent):
     Event triggered when the server is started.
     """
 
-    def __init__(self, event: str, client: AsyncMail, _server: AttachServer) -> None:
+    def __init__(
+        self, event: str, client: AsyncMail, _server: AttachServer
+    ) -> None:
         super().__init__(event, client, _server)
 
 
@@ -285,5 +325,7 @@ class ServerCalledOff(BaseEvent):
     Event triggered when the server is ended.
     """
 
-    def __init__(self, event: str, client: AsyncMail, _server: AttachServer) -> None:
+    def __init__(
+        self, event: str, client: AsyncMail, _server: AttachServer
+    ) -> None:
         super().__init__(event, client, _server)

@@ -3,7 +3,13 @@ import datetime
 import typing as t
 
 
-from .generic import MessageFrom, MessageTo, MessageAttachment, ViewDetails, ViewSearch
+from .generic import (
+    MessageFrom,
+    MessageTo,
+    MessageAttachment,
+    ViewDetails,
+    ViewSearch,
+)
 
 
 class Domain(msgspec.Struct):
@@ -73,7 +79,9 @@ class Domain(msgspec.Struct):
         If the domain is still active.
     """
 
-    is_private: t.Optional[bool] = msgspec.field(name="isPrivate", default=None)
+    is_private: t.Optional[bool] = msgspec.field(
+        name="isPrivate", default=None
+    )
     """
     If the domain is private. Private domains are not visible to the public.
     
@@ -82,7 +90,9 @@ class Domain(msgspec.Struct):
     is_private : bool
         If the domain is private. Private domains are not visible to the public.
     """
-    created_at: t.Optional[datetime.datetime] = msgspec.field(name="createdAt", default=None)
+    created_at: t.Optional[datetime.datetime] = msgspec.field(
+        name="createdAt", default=None
+    )
     """
     The datetime object of creation date of the domain.
     
@@ -92,7 +102,9 @@ class Domain(msgspec.Struct):
         The datetime object of creation date of the domain.
     """
 
-    updated_at: t.Optional[datetime.datetime] = msgspec.field(name="updatedAt", default=None)
+    updated_at: t.Optional[datetime.datetime] = msgspec.field(
+        name="updatedAt", default=None
+    )
     """
     The datetime object of update date of the domain from the latest point of reference.
 
@@ -173,7 +185,9 @@ class Account(msgspec.Struct):
         The amount of quota used by the account.
     """
 
-    is_disabled: t.Optional[bool] = msgspec.field(name="isDisabled", default=None)
+    is_disabled: t.Optional[bool] = msgspec.field(
+        name="isDisabled", default=None
+    )
     """
     If the account is disabled.
     
@@ -183,7 +197,9 @@ class Account(msgspec.Struct):
         If the account is disabled.
     """
 
-    is_deleted: t.Optional[bool] = msgspec.field(name="isDeleted", default=None)
+    is_deleted: t.Optional[bool] = msgspec.field(
+        name="isDeleted", default=None
+    )
     """
     If the account is deleted.
     
@@ -193,7 +209,9 @@ class Account(msgspec.Struct):
         If the account is deleted.
     """
 
-    created_at: t.Optional[datetime.datetime] = msgspec.field(name="createdAt", default=None)
+    created_at: t.Optional[datetime.datetime] = msgspec.field(
+        name="createdAt", default=None
+    )
     """
     The datetime object of creation date of the account.
     
@@ -203,7 +221,9 @@ class Account(msgspec.Struct):
         The datetime object of creation date of the account.
     """
 
-    updated_at: t.Optional[datetime.datetime] = msgspec.field(name="updatedAt", default=None)
+    updated_at: t.Optional[datetime.datetime] = msgspec.field(
+        name="updatedAt", default=None
+    )
     """
     The datetime object of update date of the account from the latest point of reference.
     
@@ -275,7 +295,9 @@ class Message(msgspec.Struct):
         Message ID.
     """
 
-    message_from: t.Optional[MessageFrom] = msgspec.field(name="from", default=None)
+    message_from: t.Optional[MessageFrom] = msgspec.field(
+        name="from", default=None
+    )
     """
     Details of the sender of the message.
     
@@ -285,7 +307,9 @@ class Message(msgspec.Struct):
         Details of the sender of the message.
     """
 
-    message_to: t.Optional[t.List[MessageTo]] = msgspec.field(name="to", default=None)
+    message_to: t.Optional[t.List[MessageTo]] = msgspec.field(
+        name="to", default=None
+    )
     """
     Details of the recipients of the message.
     
@@ -315,7 +339,9 @@ class Message(msgspec.Struct):
         If the message has been seen by the recipient.
     """
 
-    is_deleted: t.Optional[bool] = msgspec.field(name="isDeleted", default=None)
+    is_deleted: t.Optional[bool] = msgspec.field(
+        name="isDeleted", default=None
+    )
     """
     If the message is deleted.
     
@@ -335,7 +361,9 @@ class Message(msgspec.Struct):
         HTML content of the message.
     """
 
-    has_attachments: t.Optional[bool] = msgspec.field(name="hasAttachments", default=None)
+    has_attachments: t.Optional[bool] = msgspec.field(
+        name="hasAttachments", default=None
+    )
     """
     If the message has attachments.
     
@@ -345,7 +373,9 @@ class Message(msgspec.Struct):
         If the message has attachments.
     """
 
-    attachments: t.Optional[t.List[MessageAttachment]] = msgspec.field(name="attachments", default=None)
+    attachments: t.Optional[t.List[MessageAttachment]] = msgspec.field(
+        name="attachments", default=None
+    )
     """
     Attachments associated with the message.
     
@@ -365,7 +395,9 @@ class Message(msgspec.Struct):
         Size of the message in bytes.
     """
 
-    downloadUrl: t.Optional[str] = msgspec.field(name="downloadUrl", default=None)
+    downloadUrl: t.Optional[str] = msgspec.field(
+        name="downloadUrl", default=None
+    )
     """
     URL to download the message.
     
@@ -375,7 +407,9 @@ class Message(msgspec.Struct):
         URL to download the message.
     """
 
-    created_at: t.Optional[datetime.datetime] = msgspec.field(name="createdAt", default=None)
+    created_at: t.Optional[datetime.datetime] = msgspec.field(
+        name="createdAt", default=None
+    )
     """
     Date and time of creation of the message.
     
@@ -385,7 +419,9 @@ class Message(msgspec.Struct):
         Date and time of creation of the message.
     """
 
-    updated_at: t.Optional[datetime.datetime] = msgspec.field(name="updatedAt", default=None)
+    updated_at: t.Optional[datetime.datetime] = msgspec.field(
+        name="updatedAt", default=None
+    )
     """
     Date and time of last update of the message.
     
@@ -425,7 +461,9 @@ class Message(msgspec.Struct):
         If the message is flagged by the recipient.
     """
 
-    verifications: t.Optional[t.List[str]] = msgspec.field(name="verifications", default=None)
+    verifications: t.Optional[t.List[str]] = msgspec.field(
+        name="verifications", default=None
+    )
     """
     Verifications associated with the message.
     
@@ -435,7 +473,9 @@ class Message(msgspec.Struct):
         Verifications associated with the message.
     """
 
-    retention_date: t.Optional[datetime.datetime] = msgspec.field(name="retentionDate", default=None)
+    retention_date: t.Optional[datetime.datetime] = msgspec.field(
+        name="retentionDate", default=None
+    )
     """
     Date of retention for the message.
     
@@ -507,7 +547,9 @@ class Source:
         The id attribute of the Source.
     """
 
-    download_url: t.Optional[str] = msgspec.field(name="downloadUrl", default=None)
+    download_url: t.Optional[str] = msgspec.field(
+        name="downloadUrl", default=None
+    )
     """
     The download URL attribute of the Source.
     
@@ -533,7 +575,9 @@ class MessagePageView(msgspec.Struct):
     Page view for messages under a page.
     """
 
-    messages: t.Optional[t.List[Message]] = msgspec.field(name="hydra:member", default=None)
+    messages: t.Optional[t.List[Message]] = msgspec.field(
+        name="hydra:member", default=None
+    )
     """
     List of messages in the view.
     
@@ -543,7 +587,9 @@ class MessagePageView(msgspec.Struct):
         List of messages in the view.
     """
 
-    total_items: t.Optional[int] = msgspec.field(name="hydra:totalItems", default=None)
+    total_items: t.Optional[int] = msgspec.field(
+        name="hydra:totalItems", default=None
+    )
     """
     Total number of items in the view.
     
@@ -553,7 +599,9 @@ class MessagePageView(msgspec.Struct):
         Total number of items in the view.
     """
 
-    view_search: t.Optional[ViewSearch] = msgspec.field(name="hydra:search", default=None)
+    view_search: t.Optional[ViewSearch] = msgspec.field(
+        name="hydra:search", default=None
+    )
     """
     Search parameters of the view.
     
@@ -563,7 +611,9 @@ class MessagePageView(msgspec.Struct):
         Search parameters of the view.
     """
 
-    view_details: t.Optional[ViewDetails] = msgspec.field(name="hydra:view", default=None)
+    view_details: t.Optional[ViewDetails] = msgspec.field(
+        name="hydra:view", default=None
+    )
     """
     Details of the view.
     
@@ -579,7 +629,9 @@ class DomainPageView(msgspec.Struct):
     Page view for domains under a page.
     """
 
-    domains: t.Optional[t.List[Domain]] = msgspec.field(name="hydra:member", default=None)
+    domains: t.Optional[t.List[Domain]] = msgspec.field(
+        name="hydra:member", default=None
+    )
     """
     List of domains in the view.
     
@@ -589,7 +641,9 @@ class DomainPageView(msgspec.Struct):
         List of domains in the view.
     """
 
-    total_items: t.Optional[int] = msgspec.field(name="hydra:totalItems", default=None)
+    total_items: t.Optional[int] = msgspec.field(
+        name="hydra:totalItems", default=None
+    )
     """
     Total number of domains in the view.
     
@@ -599,7 +653,9 @@ class DomainPageView(msgspec.Struct):
         Total number of domains in the view.
     """
 
-    view_details: t.Optional[ViewDetails] = msgspec.field(name="hydra:view", default=None)
+    view_details: t.Optional[ViewDetails] = msgspec.field(
+        name="hydra:view", default=None
+    )
     """
     Details of the domain view.
     
@@ -609,7 +665,9 @@ class DomainPageView(msgspec.Struct):
         Details of the domain view.
     """
 
-    view_search: t.Optional[ViewSearch] = msgspec.field(name="hydra:search", default=None)
+    view_search: t.Optional[ViewSearch] = msgspec.field(
+        name="hydra:search", default=None
+    )
     """
     Search parameters of the domain view.
     

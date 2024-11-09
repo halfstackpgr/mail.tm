@@ -1,7 +1,7 @@
 from colorama import Fore
 import datetime
 
-text = r'''
+text = r"""
 {mail} __  __       _ _  _{reset}                           {ssb}Server-Side Build{reset}
 {mail}|  \/  |     (_) || |{reset}
 {mail}| \  / | __ _ _| || |_ _ __ ___{reset}    {info}Developed: halfstackpgr     Website: https://mail.tm{reset}
@@ -10,10 +10,11 @@ text = r'''
 {mail}|_|  |_|\__,_|_|_(_)__|_| |_| |_|{reset}                       
         {sdk} ____  ____  _  __{reset}         {issues}Issues: https://github.com/halfstackpgr/Mail.tm/Issues{reset}
         {sdk}/ ___||  _ \| |/ /{reset}        
-        {sdk}\___ \| | | | ' /{reset}          {version}Version: 0.1.2                            Coverage: 98%{reset}  
+        {sdk}\___ \| | | | ' /{reset}          {version}Version: 0.1.3                            Coverage: 98%{reset}  
         {sdk} ___) | |_| | . \{reset}       
         {sdk}|____/|____/|_|\_\{reset}         {dateandtime}Time: {time}                             Date:{date}{reset}
-'''
+"""
+
 
 def version() -> None:
     """

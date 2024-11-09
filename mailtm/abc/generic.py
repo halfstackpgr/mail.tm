@@ -12,7 +12,15 @@ These classes are designed to be used with the 'msgspec' library to facilitate q
 
 from __future__ import annotations
 
-__all__ = ["MessageFrom", "MessageTo", "MessageAttachment", "Token", "ViewDetails", "ViewMapping", "ViewSearch"]
+__all__ = [
+    "MessageFrom",
+    "MessageTo",
+    "MessageAttachment",
+    "Token",
+    "ViewDetails",
+    "ViewMapping",
+    "ViewSearch",
+]
 
 import msgspec
 import typing as t
@@ -295,7 +303,9 @@ class ViewSearch(msgspec.Struct):
         The URL template of the view.
     """
 
-    variable_representation: str = msgspec.field(name="hydra:variableRepresentation")
+    variable_representation: str = msgspec.field(
+        name="hydra:variableRepresentation"
+    )
     """
     The representation of variables in the view.
     

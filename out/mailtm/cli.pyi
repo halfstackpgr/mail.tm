@@ -1,0 +1,3 @@
+text: str
+
+def version() -> None: ...

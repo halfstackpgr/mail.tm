@@ -26,7 +26,14 @@ import msgspec
 import typing as t
 import urllib.parse
 
-from ..abc.modals import Account, DomainPageView, MessagePageView, Domain, Message, Source
+from ..abc.modals import (
+    Account,
+    DomainPageView,
+    MessagePageView,
+    Domain,
+    Message,
+    Source,
+)
 from ..abc.generic import Token
 from ..core.methods import AccountMethods, DomainMethods, MessageMethods
 from ..core.errors import (
@@ -69,7 +76,9 @@ class AsyncMail:
         self._base_url = "https://api.mail.tm"
         self._client = aiohttp.ClientSession()
         if self._account_token is not None:
-            self._client.headers.update({"Authorization": f"Bearer {self._account_token}"})
+            self._client.headers.update(
+                {"Authorization": f"Bearer {self._account_token}"}
+            )
 
     async def _interact(
         self,
@@ -113,7 +122,9 @@ class AsyncMail:
         if str(result.status).startswith("20"):
             return await result.read()
         elif result.status == 400:
-            raise MissingArgument("Something in your payload is missing! Or, the payload isn't there at all.")
+            raise MissingArgument(
+                "Something in your payload is missing! Or, the payload isn't there at all."
+            )
         elif result.status == 401:
             raise AccountTokenInvalid(
                 "Your token isn't correct (Or the headers hasn't a token at all!). Remember, every request (Except POST /accounts and POST /token) should be authenticated with a Bearer token!"
@@ -166,7 +177,9 @@ class AsyncMail:
         Optional[Account]
             The user associated with the account token provided to create a session. If not authenticated, returns None.
         """
-        resp = await self._interact(method="GET", url=await self._create_url(AccountMethods.GET_ME))
+        resp = await self._interact(
+            method="GET", url=await self._create_url(AccountMethods.GET_ME)
+        )
         if resp is not None:
             return msgspec.json.decode(resp, type=Account, strict=False)
         else:
@@ -182,7 +195,10 @@ class AsyncMail:
             A page view of domains available under the account token provided to create a session. If not authenticated, returns None.
         """
         resp = await self._interact(
-            method="GET", url=urllib.parse.urljoin(self._base_url, DomainMethods.GET_ALL_DOMAINS)
+            method="GET",
+            url=urllib.parse.urljoin(
+                self._base_url, DomainMethods.GET_ALL_DOMAINS
+            ),
         )
         if resp is not None:
             return msgspec.json.decode(resp, type=DomainPageView, strict=False)
@@ -204,7 +220,11 @@ class AsyncMail:
             The domain with the ID provided. If not found, returns None.
         """
         resp = await self._interact(
-            method="GET", url=urllib.parse.urljoin(self._base_url, DomainMethods.GET_DOMAIN_BY_ID.format(id=domain_id))
+            method="GET",
+            url=urllib.parse.urljoin(
+                self._base_url,
+                DomainMethods.GET_DOMAIN_BY_ID.format(id=domain_id),
+            ),
         )
         if resp is not None:
             return msgspec.json.decode(resp, type=Domain, strict=False)
@@ -227,7 +247,10 @@ class AsyncMail:
         """
         resp = await self._interact(
             method="POST",
-            url=urllib.parse.urljoin(self._base_url, AccountMethods.GET_ACCOUNT_BY_ID.format(id=account_id)),
+            url=urllib.parse.urljoin(
+                self._base_url,
+                AccountMethods.GET_ACCOUNT_BY_ID.format(id=account_id),
+            ),
             params={"id": f"{account_id}"},
         )
         if resp is not None:
@@ -235,7 +258,9 @@ class AsyncMail:
         else:
             return None
 
-    async def create_account(self, address: str, password: str) -> t.Optional[Account]:
+    async def create_account(
+        self, address: str, password: str
+    ) -> t.Optional[Account]:
         """
         Create an account.
 
@@ -253,7 +278,11 @@ class AsyncMail:
         """
         body = {"address": f"{address}", "password": f"{password}"}
         resp = await self._interact(
-            method="POST", url=urllib.parse.urljoin(self._base_url, AccountMethods.CREATE_ACCOUNT), body=body
+            method="POST",
+            url=urllib.parse.urljoin(
+                self._base_url, AccountMethods.CREATE_ACCOUNT
+            ),
+            body=body,
         )
         if resp is not None:
             return msgspec.json.decode(resp, type=Account, strict=False)
@@ -277,16 +306,24 @@ class AsyncMail:
             await self._interact(
                 method="DELETE",
                 url=urllib.parse.urljoin(
-                    self._base_url, AccountMethods.DELETE_ACCOUNT_BY_ID.format(id=self._account_token.id)
+                    self._base_url,
+                    AccountMethods.DELETE_ACCOUNT_BY_ID.format(
+                        id=self._account_token.id
+                    ),
                 ),
             )
         elif account_id is not None:
             await self._interact(
                 method="DELETE",
-                url=urllib.parse.urljoin(self._base_url, AccountMethods.DELETE_ACCOUNT_BY_ID.format(id=account_id)),
+                url=urllib.parse.urljoin(
+                    self._base_url,
+                    AccountMethods.DELETE_ACCOUNT_BY_ID.format(id=account_id),
+                ),
             )
         else:
-            raise AccountTokenInvalid("You need an account token to delete an account!")
+            raise AccountTokenInvalid(
+                "You need an account token to delete an account!"
+            )
 
     async def get_messages(self, page: int = 1) -> t.Optional[MessagePageView]:
         """
@@ -304,10 +341,16 @@ class AsyncMail:
         """
         params = {"page": f"{page}"}
         resp = await self._interact(
-            method="GET", url=urllib.parse.urljoin(self._base_url, MessageMethods.GET_ALL_MESSAGES), params=params
+            method="GET",
+            url=urllib.parse.urljoin(
+                self._base_url, MessageMethods.GET_ALL_MESSAGES
+            ),
+            params=params,
         )
         if resp is not None:
-            return msgspec.json.decode(resp, type=MessagePageView, strict=False)
+            return msgspec.json.decode(
+                resp, type=MessagePageView, strict=False
+            )
         else:
             return None
 
@@ -328,7 +371,10 @@ class AsyncMail:
         params = {"id": f"{message_id}"}
         resp = await self._interact(
             method="GET",
-            url=urllib.parse.urljoin(self._base_url, MessageMethods.GET_MESSAGE_BY_ID.format(id=message_id)),
+            url=urllib.parse.urljoin(
+                self._base_url,
+                MessageMethods.GET_MESSAGE_BY_ID.format(id=message_id),
+            ),
             params=params,
         )
         if resp is not None:
@@ -352,7 +398,10 @@ class AsyncMail:
         params = {"id": f"{message_id}"}
         await self._interact(
             method="DELETE",
-            url=urllib.parse.urljoin(self._base_url, MessageMethods.DELETE_MESSAGE_BY_ID.format(id=message_id)),
+            url=urllib.parse.urljoin(
+                self._base_url,
+                MessageMethods.DELETE_MESSAGE_BY_ID.format(id=message_id),
+            ),
             params=params,
         )
 
@@ -372,7 +421,10 @@ class AsyncMail:
         params = {"id": f"{message_id}"}
         await self._interact(
             method="PATCH",
-            url=urllib.parse.urljoin(self._base_url, MessageMethods.PATCH_MESSAGE_BY_ID.format(id=message_id)),
+            url=urllib.parse.urljoin(
+                self._base_url,
+                MessageMethods.PATCH_MESSAGE_BY_ID.format(id=message_id),
+            ),
             params=params,
         )
 
@@ -393,7 +445,10 @@ class AsyncMail:
         params = {"id": f"{source_id}"}
         resp = await self._interact(
             method="GET",
-            url=urllib.parse.urljoin(self._base_url, MessageMethods.GET_SOURCES_BY_ID.format(id=source_id)),
+            url=urllib.parse.urljoin(
+                self._base_url,
+                MessageMethods.GET_SOURCES_BY_ID.format(id=source_id),
+            ),
             params=params,
         )
         if resp is not None:

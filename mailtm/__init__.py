@@ -32,7 +32,7 @@ For any query or bug: [Raise an Issues](https://github.com/halfstackpgr/mailtm/i
 For further updates visit: [GitHub](https://github.com/halfstackpgr/mailtm)
 """
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 __all__ = [
     "MailServer",
