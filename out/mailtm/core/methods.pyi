@@ -1,7 +1,13 @@
 from dataclasses import dataclass
 from mailtm.server.srv import MailServerBase
 
-__all__ = ['DomainMethods', 'AccountMethods', 'MessageMethods', 'ServerAuth', 'AttachServer']
+__all__ = [
+    "DomainMethods",
+    "AccountMethods",
+    "MessageMethods",
+    "ServerAuth",
+    "AttachServer",
+]
 
 @dataclass
 class DomainMethods:
@@ -30,7 +36,13 @@ class ServerAuth:
     account_id: str
     account_address: str | None = ...
     account_password: str | None = ...
-    def __init__(self, account_token, account_id, account_address=..., account_password=...) -> None: ...
+    def __init__(
+        self,
+        account_token,
+        account_id,
+        account_address=...,
+        account_password=...,
+    ) -> None: ...
 
 @dataclass
 class AttachServer:

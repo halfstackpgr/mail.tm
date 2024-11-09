@@ -6,4 +6,15 @@ from .impls.xclient import AsyncMail as AsyncMail
 from .server import events as ServerEvents
 from .server.impl import MailServer as MailServer
 
-__all__ = ['MailServer', 'ServerEvents', 'GenericTypes', 'ModalTypes', 'AsyncMail', 'SyncMail', 'xget', 'get', 'errors', 'methods']
+__all__ = [
+    "MailServer",
+    "ServerEvents",
+    "GenericTypes",
+    "ModalTypes",
+    "AsyncMail",
+    "SyncMail",
+    "xget",
+    "get",
+    "errors",
+    "methods",
+]

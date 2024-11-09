@@ -1,6 +1,14 @@
 import msgspec
 
-__all__ = ['MessageFrom', 'MessageTo', 'MessageAttachment', 'Token', 'ViewDetails', 'ViewMapping', 'ViewSearch']
+__all__ = [
+    "MessageFrom",
+    "MessageTo",
+    "MessageAttachment",
+    "Token",
+    "ViewDetails",
+    "ViewMapping",
+    "ViewSearch",
+]
 
 class MessageFrom(msgspec.Struct):
     name: str

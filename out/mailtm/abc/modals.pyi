@@ -1,6 +1,12 @@
 import datetime
 import msgspec
-from .generic import MessageAttachment as MessageAttachment, MessageFrom as MessageFrom, MessageTo as MessageTo, ViewDetails as ViewDetails, ViewSearch as ViewSearch
+from .generic import (
+    MessageAttachment as MessageAttachment,
+    MessageFrom as MessageFrom,
+    MessageTo as MessageTo,
+    ViewDetails as ViewDetails,
+    ViewSearch as ViewSearch,
+)
 
 class Domain(msgspec.Struct):
     id: str | None
